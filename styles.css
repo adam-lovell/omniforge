@@ -1,1 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap');
+
+body {
+    background-color: #111;
+    color: #ff4500;
+    font-family: 'Cinzel', serif;
+    text-align: center;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    max-width: 600px;
+    padding: 20px;
+}
+
+.title {
+    font-size: 3rem;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    text-shadow: 0 0 20px #ff4500;
+}
+
+.intro-text {
+    font-size: 1.2rem;
+    margin: 20px 0;
+}
+
+input {
+    padding: 10px;
+    font-size: 1rem;
+    border: none;
+    background: #222;
+    color: #ff4500;
+    text-align: center;
+    outline: none;
+    border-bottom: 2px solid #ff4500;
+}
+
+button {
+    background: #ff4500;
+    color: black;
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #ff6347;
+}
+
+.hidden {
+    display: none;
+}
+
+#response-text {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    text-shadow: 0 0 10px #ff4500;
+}
 
