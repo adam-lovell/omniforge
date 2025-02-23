@@ -26,7 +26,8 @@ async function submitDesire() {
     } else {
         try {
             await addDoc(collection(db, "desires"), { text: desire });
-            alert("Desire recorded in Firestore!");
+          
+            // alert("Desire recorded in Firestore!");
             localStorage.setItem("userDesire", desire);
             window.location.href = "manifest.html"; // Now redirects correctly
         } catch (error) {
