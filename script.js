@@ -17,7 +17,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Submit Desire Function
+// Submit Desire Function (Updated Redirect to manifest.html)
 async function submitDesire() {
     let desire = document.getElementById("desire").value.trim();
 
@@ -28,7 +28,7 @@ async function submitDesire() {
             await addDoc(collection(db, "desires"), { text: desire });
             alert("Desire recorded in Firestore!");
             localStorage.setItem("userDesire", desire);
-            window.location.href = "vetra.html"; // Redirect to Vetra page
+            window.location.href = "manifest.html"; // Now redirects correctly
         } catch (error) {
             console.error("Error adding document: ", error);
             alert("Failed to save to Firebase.");
