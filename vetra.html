@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VETRA - Task Manager</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>VETRA</h1>
+    <p>The Inquisitor has delivered you to me.</p>
+    <p>Your desire: <span id="displayDesire"></span></p>
+    <button onclick="accessVetra()">Access Vetra</button>
+
+    <script>
+        document.getElementById("displayDesire").innerText = localStorage.getItem("userDesire") || "UNKNOWN";
+        function accessVetra() {
+            window.location.href = "https://github.com/HELLFORGEINQUISITOR/VETRA"; // Link to Vetra script
+        }
+    </script>
+</body>
+</html>
