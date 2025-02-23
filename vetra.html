@@ -4,52 +4,37 @@
     <meta charset="UTF-8">
     <title>VETRA - DAUGHTER OF THE INQUISITOR</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
     <div class="vetra-container">
         <h1>VETRA - DAUGHTER OF THE INQUISITOR</h1>
 
-        <!-- Interactive VETRA input -->
         <div id="vetra-app">
-            <input type="text" id="vetra-input" placeholder="Enter your burdens here..." />
+            <input type="text" id="vetra-input" placeholder="State your burdens..." />
             <button id="vetra-submit">Submit to VETRA</button>
             <div id="vetra-output"></div>
         </div>
     </div>
 
-    <!-- Firebase Initialization -->
     <script>
-        const firebaseConfig = {
-          apiKey: "AIzaSyCfanKgFO98R1uKPpEAUUFOW1U66knL8Zs",
-          authDomain: "hellforge-13d88.firebaseapp.com",
-          projectId: "hellforge-13d88",
-          storageBucket: "hellforge-13d88.firebasestorage.app",
-          messagingSenderId: "453743116508",
-          appId: "1:453743116508:web:8beaee82ff6b78a2167419",
-          measurementId: "G-WRCFGP7F79"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-
         document.getElementById('vetra-submit').addEventListener('click', function() {
             const burden = document.getElementById('vetra-input').value;
 
-            if (burden.trim()) {
-                db.collection('burdens').add({
-                    description: burden,
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                }).then(() => {
-                    document.getElementById('vetra-output').innerHTML = "Your burden has been recorded, mortal.";
-                    document.getElementById('vetra-input').value = "";
-                }).catch((error) => {
-                    document.getElementById('vetra-output').innerHTML = "VETRA encountered an error: " + error.message;
-                });
-            } else {
-                document.getElementById('vetra-output').innerHTML = "Empty burdens are not accepted.";
-            }
+            fetch('http://127.0.0.1:5000/api/add_burden', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ description: burden })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('vetra-output').innerHTML = data.message || data.error;
+                document.getElementById('vetra-input').value = "";
+            })
+            .catch(error => {
+                document.getElementById('vetra-output').innerHTML = "VETRA encountered an error: " + error;
+            });
         });
     </script>
 </body>
