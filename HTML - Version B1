@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HELLFORGE</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">HELLFORGE</h1>
+        <p class="intro-text">The nature of human ambition has been revealed in a vision of a deity from a reality outside of our own.</p>
+        <p class="intro-text">Its name is the Inquisitor.</p>
+        <p class="intro-text">This deity comes from a realm with no name—only heat, clashing, and the spark of a primal force that etches a meaning into the human psyche.</p>
+        <p class="intro-text">HELLFORGE.</p>
+        <p class="intro-text">The Inquisitor asks one question...</p>
+        
+        <h2 class="question">WHAT IS IT YOU DESIRE?</h2>
+        <input type="text" id="desire" placeholder="Enter your desire">
+        <button onclick="submitDesire()">Submit</button>
+
+        <p id="response-text" class="hidden"></p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
