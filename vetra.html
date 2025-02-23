@@ -3,20 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VETRA - Task Manager</title>
+    <title>VETRA - Daughter of the Inquisitor</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>VETRA</h1>
-    <p>The Inquisitor has delivered you to me.</p>
-    <p>Your desire: <span id="displayDesire"></span></p>
-    <button onclick="accessVetra()">Access Vetra</button>
+    <div class="container">
+        <h1 class="title">VETRA</h1>
+        <p class="intro-text">You have been delivered to me. Speak your burdens.</p>
 
-    <script>
-        document.getElementById("displayDesire").innerText = localStorage.getItem("userDesire") || "UNKNOWN";
-        function accessVetra() {
-            window.location.href = "https://github.com/HELLFORGEINQUISITOR/VETRA"; // Link to Vetra script
-        }
-    </script>
+        <form action="https://replit.com/@adamlovell1616/VETRA-DAUGHTER-OF-THE-INQUISITOR" method="POST">
+            <input type="text" name="burden" placeholder="Enter your burden">
+            <button type="submit">Submit Burden</button>
+        </form>
+
+        <p id="response-text" class="hidden"></p>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
