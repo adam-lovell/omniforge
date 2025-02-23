@@ -1,35 +1,11 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const responseText = document.getElementById("response-text");
-    const inputField = document.getElementById("username");
-    const submitButton = document.getElementById("submit-button");
-
-    let step = 0;  // Track conversation steps
-
-    submitButton.addEventListener("click", function () {
-        let input = inputField.value.trim();
-
-        if (input === "") {
-            responseText.innerHTML = "You must give the Inquisitor your name.";
-            return;
-        }
-
-        if (step === 0) {
-            responseText.innerHTML = `Welcome, ${input}.<br>What is it you desire?`;
-            inputField.value = "";
-            step = 1;
-        } 
-        else if (step === 1) {
-            responseText.innerHTML = `How will you achieve this desire?`;
-            inputField.value = "";
-            step = 2;
-        } 
-        else if (step === 2) {
-            responseText.innerHTML = `The Inquisitor offers guidance. Choose your path:`;
-            setTimeout(() => {
-                window.location.href = "choose.html";  // Redirect to choice page
-            }, 2000);
-        }
-    });
-});
+function submitDesire() {
+    let desire = document.getElementById("desire").value;
+    if (desire.trim() === "") {
+        alert("You must state your desire to the Inquisitor.");
+    } else {
+        localStorage.setItem("userDesire", desire); // Store desire for later use
+        window.location.href = "vetra.html"; // Redirect to Vetra
+    }
+}
 
 
