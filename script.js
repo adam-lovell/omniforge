@@ -1,16 +1,35 @@
-function enterForge() {
-    let name = document.getElementById("username").value;
-    let responseText = document.getElementById("response-text");
+document.addEventListener("DOMContentLoaded", function () {
+    const responseText = document.getElementById("response-text");
+    const inputField = document.getElementById("username");
+    const submitButton = document.getElementById("submit-button");
 
-    if (name.trim() === "") {
-        responseText.innerHTML = "You must give the Inquisitor your name.";
-    } else {
-        responseText.innerHTML = `Welcome, ${name}. Choose your path.`;
-        setTimeout(() => {
-            window.location.href = "choose.html"; // Redirect to the next page
-        }, 2000);
-    }
+    let step = 0;  // Track conversation steps
 
-    responseText.classList.remove("hidden");
-}
+    submitButton.addEventListener("click", function () {
+        let input = inputField.value.trim();
+
+        if (input === "") {
+            responseText.innerHTML = "You must give the Inquisitor your name.";
+            return;
+        }
+
+        if (step === 0) {
+            responseText.innerHTML = `Welcome, ${input}.<br>What is it you desire?`;
+            inputField.value = "";
+            step = 1;
+        } 
+        else if (step === 1) {
+            responseText.innerHTML = `How will you achieve this desire?`;
+            inputField.value = "";
+            step = 2;
+        } 
+        else if (step === 2) {
+            responseText.innerHTML = `The Inquisitor offers guidance. Choose your path:`;
+            setTimeout(() => {
+                window.location.href = "choose.html";  // Redirect to choice page
+            }, 2000);
+        }
+    });
+});
+
 
