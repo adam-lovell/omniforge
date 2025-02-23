@@ -1,0 +1,11 @@
+{
+    "income": 2000.0,
+    "transactions": [
+        {
+            "date": "02/24/2025",
+            "description": "Apple",
+            "amount": -54.0
+        }
+    ],
+    "subscriptions": {}
+}
