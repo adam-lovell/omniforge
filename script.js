@@ -1,3 +1,7 @@
+// Firebase imports (modular v9+)
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+import { getFirestore, collection, doc, getDoc, setDoc, addDoc, getDocs, deleteDoc, query, where } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+
 // Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyCfanKgFO98R1uKPpEAUUFOW1U66knL8Zs",
@@ -10,8 +14,8 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 async function addBurdens(tasks, dailyTasks) {
   alert("BULK TASK ENTRY:\n\nCATEGORIES: Urgent & Important, Not Urgent but Important, Urgent but Not Important, Not Urgent & Not Important\n\nFORMAT: DESCRIPTION, CATEGORY, DATE (YYYY-MM-DD), TIME (HH:MM AM/PM), DURATION (e.g., 2h 30m)\n\nSEPARATE WITH ';'");
@@ -81,11 +85,11 @@ async function addBurdens(tasks, dailyTasks) {
 
     if (isRecurring) {
       dailyTasks.push(taskData);
-      await db.collection('daily_tasks').add(taskData);
+      await addDoc(collection(db, 'daily_tasks'), taskData);
       alert(`🔄 RECURRING BURDEN '${description}' ADDED.`);
     } else {
       tasks[category].push(taskData);
-      await db.collection('tasks').add(taskData);
+      await addDoc(collection(db, 'tasks'), taskData);
       alert(`📌 BURDEN '${description}' ADDED TO '${category}'.`);
     }
 
@@ -113,8 +117,7 @@ function convertDurationToMinutes(durationStr) {
   return total;
 }
 
-async function viewBurdens() {
-  const db = getFirestore();
+async function viewBurdens(tasks, daily_tasks) {
 
   const tasksSnapshot = await getDocs(collection(db, "tasks"));
   const dailyTasksSnapshot = await getDocs(collection(db, "daily_tasks"));
@@ -165,8 +168,8 @@ async function viewBurdens() {
   alert(displayMessage);
 }
 
-async function shedBurdens() {
-    await viewBurdens(); // ✅ Show current burdens before removal
+async function shedBurdens(tasks, daily_tasks) {
+    await viewBurdens(tasks, daily_tasks); // ✅ Show current burdens before removal
 
     const categoryInput = prompt("\nENTER THE CATEGORY OF THE BURDEN TO REMOVE:\n\nCATEGORY:").trim().toLowerCase();
 
@@ -182,7 +185,7 @@ async function shedBurdens() {
         return;
     }
 
-    const burdensRef = collection(db, "burdens");
+    const burdensRef = collection(db, "tasks");
     const q = query(burdensRef, where("category", "==", categoryInput));
     const snapshot = await getDocs(q);
 
@@ -204,7 +207,7 @@ async function shedBurdens() {
     const taskNum = parseInt(taskNumInput) - 1;
 
     if (taskMapping[taskNum]) {
-        await deleteDoc(doc(db, "burdens", taskMapping[taskNum].id));
+        await deleteDoc(doc(db, "tasks", taskMapping[taskNum].id));
         alert(`✅ BURDEN '${taskMapping[taskNum].description}' LIFTED.`);
     } else {
         alert("⚠️ INVALID NUMBER. REFRAME YOUR INTENT!");
@@ -213,25 +216,20 @@ async function shedBurdens() {
 
 // Save tasks to Firebase Firestore
 async function saveTasks(tasks, dailyTasks) {
-  const tasksRef = collection(db, 'tasks');
-  await setDoc(doc(tasksRef, 'burdens'), {
-    tasks: tasks,
-    daily_tasks: dailyTasks,
-    timestamp: new Date()
-  });
+  const tasksRef = doc(db, 'vetra', 'burdens');
+  await setDoc(tasksRef, { tasks, daily_tasks: dailyTasks, timestamp: new Date() });
   alert("✅ BURDENS LOCKED, UNTIL WE MEET AGAIN, MORTAL.");
 }
 
 // Load tasks from Firebase Firestore
 async function loadTasks() {
-  const tasksRef = doc(db, 'tasks', 'burdens');
+  const tasksRef = doc(db, 'vetra', 'burdens');
   const docSnap = await getDoc(tasksRef);
   
   if (docSnap.exists()) {
     const data = docSnap.data();
     return [data.tasks, data.daily_tasks];
   } else {
-    // Default task structure if no data found
     return [{
       "Urgent & Important": [],
       "Not Urgent but Important": [],
@@ -261,7 +259,7 @@ async function main() {
     if (choice === "1") {
       await addBurdens(tasks, dailyTasks);
     } else if (choice === "2") {
-      viewBurdens(tasks, dailyTasks);
+      await viewBurdens(tasks, dailyTasks);
     } else if (choice === "3") {
       await shedBurdens(tasks, dailyTasks);
     } else if (choice === "4") {
