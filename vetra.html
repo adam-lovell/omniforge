@@ -1,18 +1,63 @@
-<!-- vetra.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>VETRA - DAUGHTER OF THE INQUISITOR</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <h1>VETRA - DAUGHTER OF THE INQUISITOR</h1>
-  <input type="text" id="burdenInput" placeholder="State your burdens...">
-  <button onclick="addBurden()">Submit to VETRA</button>
-  <button onclick="viewBurdens()">View Burdens</button>
-  <button onclick="clearBurdens()">Clear Burdens</button>
+    <meta charset="UTF-8">
+    <title>VETRA - DAUGHTER OF THE INQUISITOR</title>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-  <script type="module" src="script.js"></script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCfanKgFO98R1uKPpEAUUFOW1U66knL8Zs",
+            authDomain: "hellforge-13d88.firebaseapp.com",
+            projectId: "hellforge-13d88",
+            storageBucket: "hellforge-13d88.firebasestorage.app",
+            messagingSenderId: "453743116508",
+            appId: "1:453743116508:web:8beaee82ff6b78a2167419",
+            measurementId: "G-WRCFGP7F79"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        window.addBurden = async function() {
+            const burden = document.getElementById('burden').value;
+            if (!burden) {
+                alert("STATE YOUR BURDEN, MORTAL!");
+                return;
+            }
+
+            await addDoc(collection(db, "burdens"), {
+                description: burden,
+                timestamp: new Date()
+            });
+
+            alert(`BURDEN "${burden}" LOCKED.`);
+            document.getElementById('burden').value = "";
+        }
+
+        window.viewBurdens = async function() {
+            const querySnapshot = await getDocs(collection(db, "burdens"));
+            let message = "YOUR BURDENS:\n\n";
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                message += `- ${data.description} (at ${data.timestamp.toDate()})\n`;
+            });
+
+            alert(message);
+        }
+    </script>
+</head>
+<body style="background-color:#000; color:#f44; font-family:sans-serif; text-align:center; padding-top:10%;">
+    <h1>VETRA - DAUGHTER OF THE INQUISITOR</h1>
+    <input type="text" id="burden" placeholder="State your burdens..." style="padding:10px; width:300px;">
+    <br><br>
+    <button onclick="addBurden()" style="padding:10px 20px; background:#f44; border:none; cursor:pointer;">
+        SUBMIT TO VETRA
+    </button>
+    <button onclick="viewBurdens()" style="padding:10px 20px; background:#888; border:none; cursor:pointer;">
+        VIEW BURDENS
+    </button>
 </body>
 </html>
+
