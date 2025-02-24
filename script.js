@@ -266,4 +266,13 @@ async function main() {
 }
 
 // Initialize the program on page load
-document.addEventListener('DOMContentLoaded', main);
+document.addEventListener('DOMContentLoaded', () => {
+  main(); // initialize main loop
+  
+  // attach button listener after DOM loads
+  document.getElementById('submit-btn').addEventListener('click', async () => {
+    let [tasks, dailyTasks] = await loadTasks();
+    await addBurdens(tasks, dailyTasks);
+    await saveTasks(tasks, dailyTasks);
+  });
+});
