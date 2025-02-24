@@ -110,25 +110,24 @@ function convertDurationToMinutes(durationStr) {
 }
 
 async function viewBurdens(tasks, daily_tasks) {
-
   const tasksSnapshot = await getDocs(collection(db, "tasks"));
   const dailyTasksSnapshot = await getDocs(collection(db, "daily_tasks"));
 
-  const tasks = {};
+  const loadedTasks = {}; // <-- renamed here
   tasksSnapshot.forEach((doc) => {
     const data = doc.data();
     const category = data.category;
-    if (!tasks[category]) tasks[category] = [];
-    tasks[category].push(data);
+    if (!loadedTasks[category]) loadedTasks[category] = [];
+    loadedTasks[category].push(data);
   });
 
-  const dailyTasks = [];
-  dailyTasksSnapshot.forEach((doc) => dailyTasks.push(doc.data()));
+  const loadedDailyTasks = [];
+  dailyTasksSnapshot.forEach((doc) => loadedDailyTasks.push(doc.data()));
 
   const categorizedRecurringTasks = {};
-  Object.keys(tasks).forEach((category) => categorizedRecurringTasks[category] = []);
+  Object.keys(loadedTasks).forEach((category) => categorizedRecurringTasks[category] = []);
 
-  dailyTasks.forEach(task => {
+  loadedDailyTasks.forEach(task => {
     const category = task.category || 'Not Urgent but Important';
     if (!categorizedRecurringTasks[category]) categorizedRecurringTasks[category] = [];
     categorizedRecurringTasks[category].push(task);
@@ -136,8 +135,8 @@ async function viewBurdens(tasks, daily_tasks) {
 
   let displayMessage = "YOUR BURDENS:\n" + "=".repeat(40);
 
-  Object.keys(tasks).forEach(category => {
-    const totalTasks = tasks[category].length + (categorizedRecurringTasks[category]?.length || 0);
+  Object.keys(loadedTasks).forEach(category => {
+    const totalTasks = loadedTasks[category].length + (categorizedRecurringTasks[category]?.length || 0);
 
     displayMessage += `\n\n🔹 ${category} (${totalTasks} BURDENS):\n`;
 
@@ -146,14 +145,14 @@ async function viewBurdens(tasks, daily_tasks) {
       return;
     }
 
-    tasks[category].forEach((task, index) => {
+    loadedTasks[category].forEach((task, index) => {
       const { description, start_time, date } = task;
       displayMessage += `${index + 1}. ${description} | ⏰ ${start_time} | 📅 ${date}\n`;
     });
 
     categorizedRecurringTasks[category]?.forEach((task, index) => {
       const { description, start_time, date } = task;
-      displayMessage += `${tasks[category].length + index + 1}. ${description} | ⏰ ${start_time || "TBD"} | 📅 ${date || "Unknown"} | (RECURRING)\n`;
+      displayMessage += `${loadedTasks[category].length + index + 1}. ${description} | ⏰ ${start_time || "TBD"} | 📅 ${date || "Unknown"} | (RECURRING)\n`;
     });
   });
 
