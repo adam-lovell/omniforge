@@ -3,24 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HELLFORGE</title>
+    <title>OMNIFORGE</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1 class="title">HELLFORGE</h1>
-        <p class="intro-text">The nature of human ambition has been revealed in visions of a DEITY from a reality outside of our own.</p>
+        <h1 class="title">OMNIFORGE</h1>
+        <p class="intro-text">The nature of human ambition has been revealed in a vision of a DEITY from a reality outside of our own.</p>
         <p class="intro-text">Its name is THE INQUISITOR.</p>
-        <p class="intro-text">This DEITY comes from a realm with no name; only heat, clashing, and the spark of a primal force that commands the human mind to FORGE.</p>
+        <p class="intro-text">This DEITY comes from a realm with no name—only heat, clashing, and the spark of a primal force that etches a meaning into the human psyche.</p>
+        <p class="intro-text">OMNIFORGE.</p>
         <p class="intro-text">THE INQUISITOR asks one question.</p>
         
         <h2 class="question">WHAT IS IT YOU DESIRE?</h2>
         <input type="text" id="desire" placeholder="Enter your desire">
-        
-        <!-- Change the button to direct users explicitly to VETRA -->
-        <a href="vetra.html"><button>SUBMIT DESIRE</button></a>
+        <button onclick="submitDesire()">Submit</button>
 
         <p id="response-text" class="hidden"></p>
     </div>
+
+    <script type="module" src="script.js"></script>
 </body>
 </html>
