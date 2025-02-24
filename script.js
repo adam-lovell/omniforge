@@ -205,6 +205,80 @@ async function shedBurdens(tasks, daily_tasks) {
     }
 }
 
+async function progressReport(tasks, dailyTasks) {
+  alert("📜 PROGRESS REPORT: REVIEW YOUR BURDENS.\n");
+
+  let allTasks = [];
+  let taskMapping = {};
+  let index = 1;
+
+  // Load tasks from Firebase
+  const tasksSnapshot = await getDocs(collection(db, "tasks"));
+  const dailyTasksSnapshot = await getDocs(collection(db, "daily_tasks"));
+
+  // Regular tasks
+  tasksSnapshot.forEach((doc) => {
+    const data = doc.data();
+    taskMapping[index] = { id: doc.id, category: data.category, task: data };
+    allTasks.push(`${index}. ${data.description} | ⏰ ${data.start_time} | 📅 ${data.date} (${data.category})`);
+    index++;
+  });
+
+  // Recurring tasks
+  dailyTasksSnapshot.forEach((doc) => {
+    const data = doc.data();
+    taskMapping[index] = { id: doc.id, category: "Recurring", task: data };
+    let taskTime = data.start_time ? data.start_time : "TBD";
+    allTasks.push(`${index}. ${data.description} | ⏰ ${taskTime} (RECURRING)`);
+    index++;
+  });
+
+  if (allTasks.length === 0) {
+    alert("⚠️ NO BURDENS TO UPDATE.");
+    return;
+  }
+
+  // Show all tasks
+  let taskList = allTasks.join("\n");
+  let choice = prompt(`📌 YOUR BURDENS:\n${taskList}\n\nENTER THE NUMBER OF THE BURDEN TO UPDATE:`);
+
+  if (!taskMapping[choice]) {
+    alert("⚠️ INVALID CHOICE.");
+    return;
+  }
+
+  let selectedTask = taskMapping[choice];
+  let task = selectedTask.task;
+
+  // Options for the user
+  let action = prompt(`\nWHAT SHALL BE DONE?\n1. MARK AS COMPLETED ✅\n2. POSTPONE 🔄\n3. CANCEL ❌\n\nSPEAK A NUMERAL:`);
+
+  if (action === "1") {
+    // Remove completed task from Firebase
+    await deleteDoc(doc(db, selectedTask.category === "Recurring" ? "daily_tasks" : "tasks", selectedTask.id));
+    alert(`✅ BURDEN '${task.description}' LIFTED.`);
+
+  } else if (action === "2") {
+    // Postpone task
+    let newDate = prompt("ENTER NEW DATE (YYYY-MM-DD):").trim();
+    if (!newDate.match(/^\d{4}-\d{2}-\d{2}$/)) {
+      alert("⚠️ INVALID DATE FORMAT. UPDATE FAILED.");
+      return;
+    }
+
+    let taskRef = doc(db, selectedTask.category === "Recurring" ? "daily_tasks" : "tasks", selectedTask.id);
+    await setDoc(taskRef, { ...task, date: newDate }, { merge: true });
+
+    alert(`🔄 BURDEN '${task.description}' MOVED TO ${newDate}.`);
+
+  } else if (action === "3") {
+    alert("❌ UPDATE CANCELED.");
+
+  } else {
+    alert("⚠️ INVALID CHOICE.");
+  }
+}
+
 // Save tasks to Firebase Firestore
 async function saveTasks(tasks, dailyTasks) {
   const tasksRef = doc(db, 'vetra', 'burdens');
@@ -266,13 +340,20 @@ async function main() {
 
 // Initialize the program on page load
 document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('vetra-start-btn').addEventListener('click', main);
+  const vetraBtn = document.getElementById('vetra-start-btn');
+  if (vetraBtn) vetraBtn.addEventListener('click', main);
 }); // initialize main loop
   
   // attach button listener after DOM loads
-  document.getElementById('submit-btn').addEventListener('click', async () => {
+  const submitBtn = document.getElementById('submit-btn');
+if (submitBtn) {
+  submitBtn.addEventListener('click', async () => {
     let [tasks, dailyTasks] = await loadTasks();
     await addBurdens(tasks, dailyTasks);
     await saveTasks(tasks, dailyTasks);
   });
-});
+}
+
+
+
+
