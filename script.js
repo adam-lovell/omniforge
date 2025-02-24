@@ -266,7 +266,8 @@ async function main() {
 
 // Initialize the program on page load
 document.addEventListener('DOMContentLoaded', () => {
-  main(); // initialize main loop
+  document.getElementById('vetra-start-btn').addEventListener('click', main);
+}); // initialize main loop
   
   // attach button listener after DOM loads
   document.getElementById('submit-btn').addEventListener('click', async () => {
