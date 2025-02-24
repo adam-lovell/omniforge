@@ -1,41 +1,18 @@
+<!-- vetra.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>VETRA - DAUGHTER OF THE INQUISITOR</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>VETRA - DAUGHTER OF THE INQUISITOR</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="vetra-container">
-        <h1>VETRA - DAUGHTER OF THE INQUISITOR</h1>
+  <h1>VETRA - DAUGHTER OF THE INQUISITOR</h1>
+  <input type="text" id="burdenInput" placeholder="State your burdens...">
+  <button onclick="addBurden()">Submit to VETRA</button>
+  <button onclick="viewBurdens()">View Burdens</button>
+  <button onclick="clearBurdens()">Clear Burdens</button>
 
-        <div id="vetra-app">
-            <input type="text" id="vetra-input" placeholder="State your burdens..." />
-            <button id="vetra-submit">Submit to VETRA</button>
-            <div id="vetra-output"></div>
-        </div>
-    </div>
-
-    <script>
-        document.getElementById('vetra-submit').addEventListener('click', function() {
-            const burden = document.getElementById('vetra-input').value;
-
-            fetch('http://127.0.0.1:5000/api/add_burden', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ description: burden })
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('vetra-output').innerHTML = data.message || data.error;
-                document.getElementById('vetra-input').value = "";
-            })
-            .catch(error => {
-                document.getElementById('vetra-output').innerHTML = "VETRA encountered an error: " + error;
-            });
-        });
-    </script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>
