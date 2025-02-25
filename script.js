@@ -358,7 +358,6 @@ if (submitBtn) {
 
 // SUBMIT DESIRE BUTTON ON MAIN PAGE
 function submitDesire() {
-  // Redirect to manifest.html
   window.location.href = 'manifest.html';
 }
 
