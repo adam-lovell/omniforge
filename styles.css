@@ -11,6 +11,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    padding: 20px;
 }
 
 .container {
@@ -30,6 +31,7 @@ body {
     margin: 20px 0;
 }
 
+/* Button Styling */
 .choices {
     display: flex;
     flex-direction: column;
@@ -38,28 +40,71 @@ body {
 }
 
 button {
-    background: #ff4500;
+    background: linear-gradient(45deg, #ff4500, #ff6347);
     color: black;
     padding: 15px 30px;
     font-size: 1.2rem;
+    font-weight: bold;
     border: none;
     cursor: pointer;
-    transition: 0.3s;
+    transition: 0.3s ease-in-out;
     font-family: 'Cinzel', serif;
     letter-spacing: 2px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 10px rgba(255, 69, 0, 0.6);
 }
 
 button:hover {
-    background: #ff6347;
+    background: linear-gradient(45deg, #ff6347, #ff4500);
+    transform: scale(1.05);
 }
 
+/* Hide elements */
 .hidden {
     display: none;
 }
 
+/* Response Text */
 #response-text {
     margin-top: 20px;
     font-size: 1.2rem;
     text-shadow: 0 0 10px #ff4500;
+}
+
+/* VETRA Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #222;
+    color: #ff4500;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px rgba(255, 69, 0, 0.5);
+    width: 80%;
+    max-width: 400px;
+}
+
+.modal.active {
+    display: block;
+}
+
+.modal h2 {
+    font-size: 1.5rem;
+    text-shadow: 0 0 5px #ff4500;
+}
+
+.modal p {
+    font-size: 1.2rem;
+}
+
+.modal button {
+    margin-top: 15px;
+    background: #ff4500;
+    padding: 10px;
+    font-size: 1rem;
 }
 
