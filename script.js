@@ -354,6 +354,9 @@ if (submitBtn) {
   });
 }
 
-
+function submitDesire() {
+  // Redirect to manifest.html
+  window.location.href = 'manifest.html';
+}
 
 
