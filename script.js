@@ -1,3 +1,4 @@
+/* 
 // Firebase imports (modular v9+)
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
 import { getFirestore, collection, doc, getDoc, setDoc, addDoc, getDocs, deleteDoc, query, where } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
@@ -353,6 +354,7 @@ if (submitBtn) {
     await saveTasks(tasks, dailyTasks);
   });
 }
+*/
 
 // SUBMIT DESIRE BUTTON ON MAIN PAGE
 function submitDesire() {
