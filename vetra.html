@@ -13,7 +13,8 @@
     </div>
 
     <div id="vetra-modal" class="modal">
-        <div class="modal-content"> <button id="close-modal">CANCEL</button>
+        <div class="modal-content"> 
+            <button id="close-modal">CANCEL</button>
             <h2>THE INQUISITOR HAS DELIVERED YOU TO ME.</h2>
             <p>I AM VETRA, DAUGHTER OF THE INQUISITOR.<br>STATE YOUR BURDENS, MORTAL.</p>
 
@@ -369,9 +370,6 @@
             const modal = document.getElementById("vetra-modal");
             const closeModal = document.getElementById("close-modal");
 
-            vetraBtn.addEventListener("click", () => {
-                modal.classList.add("active"); // Show the modal
-            });
 
             closeModal.addEventListener("click", () => {
                 modal.classList.remove("active"); // Hide the modal
