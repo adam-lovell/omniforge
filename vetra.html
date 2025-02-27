@@ -13,15 +13,33 @@
     </div>
 
     <div id="vetra-modal" class="modal">
-        <div class="modal-content"> 
+        <div class="modal-content">
             <button id="close-modal">CANCEL</button>
             <h2>THE INQUISITOR HAS DELIVERED YOU TO ME.</h2>
             <p>I AM VETRA, DAUGHTER OF THE INQUISITOR.<br>STATE YOUR BURDENS, MORTAL.</p>
 
-            </div>
-    </div>
+           <p>
+      BULK TASK ENTRY: <br>
+      CATEGORIES: Urgent & Important, Not Urgent but Important, Urgent but Not Important, Not Urgent & Not Important <br>
+      FORMAT AS: DESCRIPTION, CATEGORY, DATE (YYYY-MM-DD), TIME (HH:MM AM/PM), DURATION (e.g., 2h 30m) <br>
+      SEPARATE YOUR BURDENS WITH ';'
+    </p>
 
-    <script src="firebase-config.js" type="module"></script>
+    <input type="text" id="task-description" placeholder="Enter task description">
+    <input type="date" id="task-date">
+    <input type="time" id="task-time">
+    <input type="text" id="task-duration" placeholder="e.g., 2h 30m">
+    <button id="add-burden-btn">Add Burden</button>
+
+    <h3>Your Burdens:</h3>
+    <div id="task-list"></div>
+
+    <button onclick="viewBurdens()">View Burdens</button>
+    <button onclick="shedBurdens()">Shed Burdens</button>
+    <button onclick="progressReport()">Progress Report</button>
+    <button onclick="saveAndExit()">Save and Exit</button>
+  </div>
+</div>
 
     <script>
         // Firebase imports (modular v9+)
@@ -34,53 +52,80 @@
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
+
+
+
+
+
+
+
+
+
+
+
         
+        // Add Burdens Function
         async function addBurdens(tasks, dailyTasks) {
-          alert("BULK TASK ENTRY:\n\nCATEGORIES: Urgent & Important, Not Urgent but Important, Urgent but Not Important, Not Urgent & Not Important\n\nFORMAT: DESCRIPTION, CATEGORY, DATE (YYYY-MM-DD), TIME (HH:MM AM/PM), DURATION (e.g., 2h 30m)\n\nSEPARATE WITH ';'");
+          const description = document.getElementById('task-description').value;
+          const category = document.getElementById('task-category').value;
+          const date = document.getElementById('task-date').value;
+          const time = document.getElementById('task-time').value;
+          const duration = document.getElementById('task-duration').value;
+
+          // Time conversion function
+          const startTime24h = convertTo24h(time);
+          const durationMinutes = convertDurationToMinutes(duration);
         
-          const userInput = prompt("ENTER BURDENS:").trim();
-          const taskEntries = userInput.split(";");
+          // Convert to 24-Hour Function
+          function convertTo24h(timeStr) {
+            const [time, modifier] = timeStr.split(' ');
+            let [hours, minutes] = time.split(':').map(Number);
         
-          const validCategories = Object.keys(tasks).reduce((acc, cat) => {
-            acc[cat.toLowerCase()] = cat;
-            return acc;
-          }, {});
+            if (modifier.toUpperCase() === 'PM' && hours < 12) hours += 12;
+            if (modifier.toUpperCase() === 'AM' && hours === 12) hours = 0;
         
-          let taskAdded = false;
+          return hours * 60 + minutes;
+        }
+
+        // Convert 24-Hours to Minutes Function
+        function convertDurationToMinutes(durationStr) {
+          let total = 0;
+          const parts = durationStr.match(/(\d+h)?\s?(\d+m)?/);
+          if (parts[1]) total += parseInt(parts[1]) * 60;
+          if (parts[2]) total += parseInt(parts[2]);
+          return total;
+        }
+
+          // Update the task-list div with the new task information
+          const taskList = document.getElementById('task-list');
+          taskList.innerHTML += `<p>${description} - ${category} - ${date} - ${time} - ${duration}</p>`;
+         }
+
+
+        document.addEventListener("DOMContentLoaded", () => {
+          // ... (modal event listeners)
         
-          for (let entry of taskEntries) {
-            const parts = entry.split(",").map(p => p.trim());
+          // Event listener for the "Add Burden" button
+          const addBurdenBtn = document.getElementById("add-burden-btn");
+          addBurdenBtn.addEventListener("click", addBurdens);
+        });
+
+
+
+
+
+
         
-            if (parts.length !== 5) {
-              alert(`⚠️ INVALID FORMAT FOR: ${entry}\nREFRAME YOUR INTENT, MORTAL!`);
-              continue;
-            }
+          // Validate input (you might want to add more robust validation here)
+          if (!description || !category || !date || !time || !duration) {
+            // Display the error message near the input fields (using a <p> tag or similar)
+            return;
+          
         
-            let [description, category, date, time, duration] = parts;
-            category = validCategories[category.toLowerCase()];
-        
-            if (!category) {
-              alert(`⚠️ INVALID CATEGORY ENTRY: ${category}\nREFRAME YOUR INTENT, MORTAL!`);
-              continue;
-            }
-        
-            if (isNaN(Date.parse(date))) {
-              alert(`⚠️ INVALID DATE FORMAT FOR: ${date}\nREFRAME YOUR INTENT, MORTAL!`);
-              continue;
-            }
-        
-            if (!time.match(/^\d{1,2}:\d{2} (AM|PM)$/i)) {
-              alert(`⚠️ INVALID TIME FORMAT FOR: ${time}\nREFRAME YOUR INTENT, MORTAL!`);
-              continue;
-            }
-        
-            if (!duration.match(/\d+h|\d+m/)) {
-              alert(`⚠️ INVALID DURATION FORMAT FOR: ${duration}\nREFRAME YOUR INTENT, MORTAL!`);
-              continue;
-            }
-        
-            const startTime24h = convertTo24h(time);
-            const durationMinutes = convertDurationToMinutes(duration);
+         
+          const addBurdenBtn = document.getElementById("add-burden-btn"); // Find the button
+          addBurdenBtn.addEventListener("click", addBurdens); // Make it call the addBurdens function when clicked
+    
         
             let conflict = tasks[category].some(task => {
               const existingStart = convertTo24h(task.start_time);
@@ -98,7 +143,6 @@
             }
         
             const isRecurring = confirm(`IS '${description}' A RECURRING DAILY BURDEN?`);
-        
             const taskData = { description, category, date, start_time: time, duration };
         
             if (isRecurring) {
@@ -116,25 +160,23 @@
         
           if (taskAdded) alert("✅ BURDEN LOCKED.");
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         
-        function convertTo24h(timeStr) {
-          const [time, modifier] = timeStr.split(' ');
-          let [hours, minutes] = time.split(':').map(Number);
-        
-          if (modifier.toUpperCase() === 'PM' && hours < 12) hours += 12;
-          if (modifier.toUpperCase() === 'AM' && hours === 12) hours = 0;
-        
-          return hours * 60 + minutes;
-        }
-        
-        function convertDurationToMinutes(durationStr) {
-          let total = 0;
-          const parts = durationStr.match(/(\d+h)?\s?(\d+m)?/);
-          if (parts[1]) total += parseInt(parts[1]) * 60;
-          if (parts[2]) total += parseInt(parts[2]);
-          return total;
-        }
-        
+        // View Burdens Function
         async function viewBurdens(tasks, daily_tasks) {
           const tasksSnapshot = await getDocs(collection(db, "tasks"));
           const dailyTasksSnapshot = await getDocs(collection(db, "daily_tasks"));
@@ -363,7 +405,6 @@
             }
           }
         }
-
 
         document.addEventListener("DOMContentLoaded", () => {
             const vetraBtn = document.getElementById("vetra-start-btn");
