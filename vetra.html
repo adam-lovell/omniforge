@@ -45,8 +45,34 @@
 </div>
 
 
-    <script type="module">
 
+    
+
+    <script type="module">
+        document.addEventListener("DOMContentLoaded", () => {
+            console.log("✅ JavaScript Loaded!");
+    
+            const vetraBtn = document.getElementById("vetra-start-btn");
+            const modal = document.getElementById("vetra-modal");
+            const closeModal = document.getElementById("close-modal");
+    
+            if (!vetraBtn || !modal || !closeModal) {
+                console.error("⚠️ Button or Modal not found! Check HTML.");
+                return;
+            }
+    
+            vetraBtn.addEventListener("click", () => {
+                console.log("🔥 BUTTON CLICKED!");
+                modal.classList.add("active");
+            });
+    
+            closeModal.addEventListener("click", () => {
+                modal.classList.remove("active");
+            });
+        });
+
+
+        
 
 
 
