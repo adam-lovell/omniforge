@@ -11,23 +11,17 @@
         <h1 class="title">VETRA - DAUGHTER OF THE INQUISITOR</h1>
         <button id="vetra-start-btn">STATE YOUR BURDENS, MORTAL</button>
     </div>
-
-    <div id="vetra-modal" class="modal">
-      <div class="modal-content">
-        <p id="error-message" style="color: red;"></p> </div>
-    </div>
     
-    <div id="vetra-modal" class="modal">
-        <div class="modal-content">
-            <button id="close-modal">CANCEL</button>
-            <h2>THE INQUISITOR HAS DELIVERED YOU TO ME.</h2>
-            <p>I AM VETRA, DAUGHTER OF THE INQUISITOR.<br>STATE YOUR BURDENS, MORTAL.</p>
+<div id="vetra-modal" class="modal">
+  <div class="modal-content">
+    <p id="error-message" style="color: red;"></p> 
+    <button id="close-modal">CANCEL</button>
+    <h2>THE INQUISITOR HAS DELIVERED YOU TO ME.</h2>
+    <p>I AM VETRA, DAUGHTER OF THE INQUISITOR.<br>STATE YOUR BURDENS, MORTAL.</p>
 
     <div id="burden-list"></div>
-    <button onclick="viewBurdens(tasks, dailyTasks)">View Burdens</button>
-
-
-           <p>
+    <button onclick="viewBurdens()">View Burdens</button>
+    <p>
       BULK TASK ENTRY: <br>
       CATEGORIES: Urgent & Important, Not Urgent but Important, Urgent but Not Important, Not Urgent & Not Important <br>
       FORMAT AS: DESCRIPTION, CATEGORY, DATE (YYYY-MM-DD), TIME (HH:MM AM/PM), DURATION (e.g., 2h 30m) <br>
@@ -50,19 +44,52 @@
   </div>
 </div>
 
+
     <script>
-        // Firebase imports (modular v9+)
+
+
+
+
+
+        
+    document.addEventListener("DOMContentLoaded", () => {
+        console.log("✅ JavaScript Loaded!");
+    
+        const vetraBtn = document.getElementById("vetra-start-btn");
+        const modal = document.getElementById("vetra-modal");
+        const closeModal = document.getElementById("close-modal");
+    
+        if (!vetraBtn || !modal || !closeModal) {
+            console.error("⚠️ Button or Modal not found! Check HTML.");
+            return;
+        }
+    
+        // When clicking "STATE YOUR BURDENS, MORTAL" button, open modal
+        vetraBtn.addEventListener("click", () => {
+            console.log("🔥 BUTTON CLICKED!");
+            modal.classList.add("active"); // Ensure modal opens
+        });
+    
+        // When clicking "CANCEL", close modal
+        closeModal.addEventListener("click", () => {
+            modal.classList.remove("active"); // Ensure modal closes
+        });
+    });
+
+
+
+
+
+
+        
+        // FIREBASE CONFIGURATION, IMPORTS AND INITIALIZATION
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
         import { getFirestore, collection, doc, getDoc, setDoc, addDoc, getDocs, deleteDoc, query, where } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
-        
-        // CONFIGURATION IMPORT
         import { firebaseConfig } from './firebase-config.js';
-        
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         
-              // Utility Functions
+        // CONVERT TIME TO 24-HOUR
         function convertTo24h(timeStr) {
             const [time, modifier] = timeStr.split(' ');
             let [hours, minutes] = time.split(':').map(Number);
@@ -70,7 +97,8 @@
             if (modifier.toUpperCase() === 'AM' && hours === 12) hours = 0;
             return hours * 60 + minutes;
         }
-        
+
+        // CONVERT 24-HOUR TO MINUTES    
         function convertDurationToMinutes(durationStr) {
             let total = 0;
             const parts = durationStr.match(/(\d+h)?\s?(\d+m)?/);
@@ -79,6 +107,10 @@
             return total;
         }
 
+
+
+
+        
         
         // ADD BURDENS FUNCTION
         async function addBurdens() {
@@ -90,13 +122,13 @@
             const isRecurring = document.getElementById('recurring-checkbox').checked;
             const errorMessage = document.getElementById('error-message');
         
-            // Validate Inputs
+            // VALIDATE USER INPUT
             if (!description || !category || !date || !time || !duration) {
                 errorMessage.textContent = "⚠️ REFRAME, MORTAL! COMPLETE ALL FIELDS.";
                 return;
             }
         
-            // Ensure category exists in the task structure
+            // VALIDATE CATEGORY 
             if (!tasks[category]) {
                 errorMessage.textContent = "⚠️ INVALID CATEGORY. REFRAME YOUR INTENT!";
                 return;
@@ -143,61 +175,44 @@
             document.getElementById("add-burden-btn").addEventListener("click", addBurdens);
         });
 
+
+
+
+
+        
+        
         
         // VIEW BURDENS FUNCTION
-        function viewBurdens(tasks, dailyTasks) {
-            const burdenListDiv = document.getElementById("burden-list");
-            burdenListDiv.innerHTML = "<h2>YOUR BURDENS:</h2><hr>";
-    
-            // Step 1: Merge recurring tasks into their respective categories
-            const categorizedRecurringTasks = {};
+        async function viewBurdens() {
+            let [tasks, dailyTasks] = await loadTasks(); // ✅ Load tasks inside function
+        
+            let message = "📌 YOUR BURDENS:\n";
             Object.keys(tasks).forEach(category => {
-                categorizedRecurringTasks[category] = [];
+                message += `\n🔹 ${category} (${tasks[category].length} BURDENS):\n`;
+                tasks[category].forEach((task, index) => {
+                    message += `  ${index + 1}. ${task.description} | ⏰ ${task.start_time} | 📅 ${task.date}\n`;
+                });
             });
-    
-            dailyTasks.forEach(task => {
-                const category = task.category || "Not Urgent but Important"; // Default category
-                if (!tasks.hasOwnProperty(category)) {
-                    console.warn(`⚠️ RECURRING BURDEN '${task.description}' HAS NO CATEGORY. DEFAULTING TO 'Not Urgent but Important'.`);
-                }
-                categorizedRecurringTasks[category].push(task);
-            });
-    
-            // Step 2: Loop through categories and display tasks
-            Object.keys(tasks).forEach(category => {
-                const regularTasks = tasks[category];
-                const recurringTasks = categorizedRecurringTasks[category] || [];
-                const totalTasks = regularTasks.length + recurringTasks.length;
-    
-                let categoryHtml = `<h3>🔹 ${category} (${totalTasks} BURDENS)</h3>`;
-    
-                if (totalTasks === 0) {
-                    categoryHtml += "<p>(PITY, AN EMPTY VESSEL)</p>";
-                } else {
-                    // Regular Tasks
-                    regularTasks.forEach((task, index) => {
-                        const description = task.description || "No description";
-                        const startTime = task.start_time || "TBD";
-                        const date = task.date || "Unknown";
-                        const duration = task.duration || "Unknown";
-                        categoryHtml += `<p>${index + 1}. ${description} | ⏰ ${startTime} | 📅 ${date}</p>`;
-                    });
-    
-                    // Recurring Tasks
-                    recurringTasks.forEach((task, index) => {
-                        const description = task.description || "No description";
-                        const startTime = task.start_time || "TBD";
-                        const date = task.date || "Unknown";
-                        categoryHtml += `<p>${regularTasks.length + index + 1}. ${description} | ⏰ ${startTime} | 📅 ${date} | (RECURRING)</p>`;
-                    });
-                }
-    
-                burdenListDiv.innerHTML += categoryHtml;
-            });
-    
-            burdenListDiv.innerHTML += "<hr>";
+        
+            if (dailyTasks.length > 0) {
+                message += "\n🔄 **RECURRING BURDENS:**\n";
+                dailyTasks.forEach((task, index) => {
+                    message += `  ${index + 1}. ${task.description} | ⏰ ${task.start_time || "TBD"} (DAILY)\n`;
+                });
+            }
+        
+            alert(message);
         }
 
+
+
+
+
+
+        
+
+
+        
         
         // SHED BURDENS FUNCTION
         async function shedBurdens(tasks, dailyTasks) {
@@ -260,6 +275,18 @@
             await deleteDoc(doc(db, collectionName, selectedTask.id));
             alert(`✅ BURDEN '${selectedTask.description}' LIFTED.`);
         }
+
+
+
+
+
+
+
+
+
+
+
+
 
         
         // PROGRESS REPORT FUNCTION
@@ -340,7 +367,14 @@
             }
         }
 
-     
+
+
+
+
+
+
+
+        
         
        // ✅ Save tasks to Firebase Firestore (prevents overwriting)
        async function saveTasks(tasks, dailyTasks) {
@@ -353,6 +387,22 @@
                alert("⚠️ FAILED TO LOCK BURDENS. TRY AGAIN, MORTAL.");
            }
        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
 
         // ✅ Load tasks from Firebase Firestore (ensures no missing properties)
         async function loadTasks() {
@@ -391,6 +441,20 @@
             }
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
     // ✅ Main program function (Uses UI-based interaction instead of infinite loop)
     async function main() {
         let [tasks, dailyTasks] = await loadTasks();
@@ -429,7 +493,20 @@
             }
         }
     }
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
     // ✅ Ensures UI-based interaction starts `main()`
     document.addEventListener("DOMContentLoaded", () => {
         const vetraBtn = document.getElementById("vetra-start-btn");
@@ -447,6 +524,24 @@
             modal.classList.remove("active"); // Hide modal
         });
     });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
     </script>
 </body>
 </html>
