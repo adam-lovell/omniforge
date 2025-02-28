@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap');
 
 body {
-    background-color: #111;
-    color: #ff4500;
+    background-color: #0D1117; /* Dark Blue-Gray */
+    color: #F5C518; /* Gold */
     font-family: 'Cinzel', serif;
     text-align: center;
     margin: 0;
@@ -23,12 +23,15 @@ body {
     font-size: 3rem;
     text-transform: uppercase;
     letter-spacing: 5px;
-    text-shadow: 0 0 20px #ff4500;
+    text-shadow: 0 0 20px #0DC5FF; /* Electric Blue Glow */
 }
 
-.intro-text {
-    font-size: 1.5rem;
-    margin: 20px 0;
+/* Logo */
+#vetra-logo {
+    width: 250px; /* Adjust size */
+    height: auto;
+    margin-bottom: 20px;
+    filter: drop-shadow(0px 0px 15px #0DC5FF); /* Electric blue glow */
 }
 
 /* Button Styling */
@@ -40,7 +43,7 @@ body {
 }
 
 button {
-    background: linear-gradient(45deg, #ff4500, #ff6347);
+    background: linear-gradient(45deg, #0DC5FF, #003366); /* Blue gradient */
     color: black;
     padding: 15px 30px;
     font-size: 1.2rem;
@@ -51,11 +54,11 @@ button {
     font-family: 'Cinzel', serif;
     letter-spacing: 2px;
     border-radius: 5px;
-    box-shadow: 0px 4px 10px rgba(255, 69, 0, 0.6);
+    box-shadow: 0px 4px 10px rgba(13, 197, 255, 0.6);
 }
 
 button:hover {
-    background: linear-gradient(45deg, #ff6347, #ff4500);
+    background: linear-gradient(45deg, #003366, #0DC5FF);
     transform: scale(1.05);
 }
 
@@ -68,7 +71,7 @@ button:hover {
 #response-text {
     margin-top: 20px;
     font-size: 1.2rem;
-    text-shadow: 0 0 10px #ff4500;
+    text-shadow: 0 0 10px #0DC5FF;
 }
 
 /* VETRA Modal Styling */
@@ -79,11 +82,11 @@ button:hover {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    background-color: #222;
-    color: #ff4500;
+    background-color: #1A1F2E; /* Deep Blue-Gray */
+    color: #F5C518; /* Gold */
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0px 5px 15px rgba(255, 69, 0, 0.5);
+    box-shadow: 0px 5px 15px rgba(13, 197, 255, 0.5); /* Blue Glow */
     width: 80%;
     max-width: 400px;
 }
@@ -94,7 +97,7 @@ button:hover {
 
 .modal h2 {
     font-size: 1.5rem;
-    text-shadow: 0 0 5px #ff4500;
+    text-shadow: 0 0 5px #F5C518; /* Gold Glow */
 }
 
 .modal p {
@@ -103,8 +106,10 @@ button:hover {
 
 .modal button {
     margin-top: 15px;
-    background: #ff4500;
+    background: #0DC5FF;
     padding: 10px;
     font-size: 1rem;
+    border-radius: 5px;
 }
+
 
