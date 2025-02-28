@@ -26,12 +26,12 @@ body {
     text-shadow: 0 0 20px #0DC5FF; /* Electric Blue Glow */
 }
 
-/* Logo */
 #vetra-logo {
-    width: 250px; /* Adjust size */
+    width: 250px;  /* Adjust size */
     height: auto;
     margin-bottom: 20px;
     filter: drop-shadow(0px 0px 15px #0DC5FF); /* Electric blue glow */
+    border-radius: 10px; /* Smooth edges */
 }
 
 /* Button Styling */
