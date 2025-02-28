@@ -31,6 +31,7 @@ body {
     margin: 20px auto;
     width: 300px; /* Adjust size */
     height: auto;
+    filter: drop-shadow(0 0 10px cyan); /* Tech Glow Effect */
 }
 
 /* Button Styling */
