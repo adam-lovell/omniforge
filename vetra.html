@@ -45,12 +45,14 @@
   </div>
 </div>
 
-<script>
+<script> // BEGIN SCRIPT 1 - UI Logic & Event Listeners
+    // MAIN UI FUNCTION
     async function main() {
         let [tasks, dailyTasks] = await loadTasks(); 
     
         const menuOptions = `
             THE INQUISITOR HAS DELIVERED YOU TO ME.
+            
             I AM VETRA, DAUGHTER OF THE INQUISITOR.
     
             STATE YOUR BURDENS, MORTAL.
@@ -65,11 +67,17 @@
         `;
     
         console.log(menuOptions);
-        document.getElementById("vetra-text").textContent = menuOptions; 
+        const vetraText = document.getElementById("vetra-text");
+        if (vetraText) {
+            vetraText.textContent = menuOptions;
+        } else {
+            console.warn("⚠️ Missing #vetra-text element in HTML.");
+        }
     }
-
+    
     // HELPER FUNCTION 1 - Converts to 24-Hour Format
     function convertTo24h(timeStr) {
+        if (!timeStr) return 0; 
         const [time, modifier] = timeStr.split(' ');
         let [hours, minutes] = time.split(':').map(Number);
         if (modifier.toUpperCase() === 'PM' && hours < 12) hours += 12;
@@ -79,6 +87,7 @@
 
     // HELPER FUNCTION 2 - Converts to Minutes 
     function convertDurationToMinutes(durationStr) {
+        if (!durationStr) return 0;
         let total = 0;
         const parts = durationStr.match(/(\d+h)?\s?(\d+m)?/);
         if (parts[1]) total += parseInt(parts[1]) * 60;
@@ -103,13 +112,28 @@
         vetraBtn.addEventListener("click", () => {
             console.log("🔥 BUTTON CLICKED!");
             modal.classList.add("active");
+            main();
         });
     
         closeModal.addEventListener("click", () => {
             modal.classList.remove("active");
         });
-    });
+
+    // ADD BURDEN BUTTONS
+    document.getElementById("add-burden-btn").addEventListener("click", addBurdens);
+    document.getElementById("view-burdens-btn").addEventListener("click", viewBurdens);
+    document.getElementById("shed-burdens-btn").addEventListener("click", shedBurdens);
+    document.getElementById("progress-report-btn").addEventListener("click", progressReport);
+    document.getElementById("save-exit-btn").addEventListener("click", saveTasks);
+});
+</script> 
+
+
+
     
+<script>
+
+</script>
     EVERYTHING UP GOOD -----------------------------------------------------------------------------------------------------
 
         
