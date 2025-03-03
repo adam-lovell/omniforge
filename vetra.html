@@ -452,65 +452,50 @@
 
 
         
-    // ✅ Main program function (Uses UI-based interaction instead of infinite loop)
-    async function main() {
-        let [tasks, dailyTasks] = await loadTasks();
-    
-        const menuOptions = `
-            THE INQUISITOR HAS DELIVERED YOU TO ME.
-            I AM VETRA, DAUGHTER OF THE INQUISITOR.
-            
-            STATE YOUR BURDENS, MORTAL.
-    
-            1: ADD BURDEN.
-            2: VIEW BURDENS.
-            3: SHED BURDENS.
-            4: PROGRESS REPORT.
-            5: SAVE AND EXIT.
-    
-            SPEAK A NUMERAL:
-        `;
-    }
+  // ✅ Main program function (Uses UI-based interaction instead of infinite loop)
+async function main() {
+    let [tasks, dailyTasks] = await loadTasks(); // ✅ Ensure loadTasks() exists
 
+    const menuOptions = `
+        THE INQUISITOR HAS DELIVERED YOU TO ME.
+        I AM VETRA, DAUGHTER OF THE INQUISITOR.
 
+        STATE YOUR BURDENS, MORTAL.
 
+        1: ADD BURDEN.
+        2: VIEW BURDENS.
+        3: SHED BURDENS.
+        4: PROGRESS REPORT.
+        5: SAVE AND EXIT.
 
+        SPEAK A NUMERAL:
+    `;
 
+    console.log(menuOptions); // ✅ This replaces prompt()
+    document.getElementById("vetra-text").textContent = menuOptions; // ✅ Updates modal text dynamically
+}
 
-
-
-
-
-
-
-
-        
-    document.addEventListener("DOMContentLoaded", () => {
-        const vetraBtn = document.getElementById("vetra-start-btn");
-        const modal = document.getElementById("vetra-modal");
-        const closeModal = document.getElementById("close-modal");
-        const modalText = document.getElementById("vetra-text"); // 👈 New element inside modal
+// ✅ Event Listeners (Ensures UI interaction works properly)
+document.addEventListener("DOMContentLoaded", () => {
+    const vetraBtn = document.getElementById("vetra-start-btn");
+    const modal = document.getElementById("vetra-modal");
+    const closeModal = document.getElementById("close-modal");
+    const modalText = document.getElementById("vetra-text"); // ✅ UI Text Element
 
     // ✅ Start Vetra when button is clicked
     vetraBtn.addEventListener("click", () => {
-        console.log("Button clicked!"); // Debugging log
-        modal.classList.add("active"); // Show modal
-        modalText.textContent = "State your burdens, Mortal."; // 👈 Dynamically updates text instead of using prompt()
-        main(); // Start program
+        console.log("Button clicked! ✅");
+        modal.classList.add("active"); // ✅ Show modal
+        main(); // ✅ Start program
     });
 
     // ✅ Close modal when "X" is clicked
     closeModal.addEventListener("click", () => {
-        console.log("Modal closed!"); // Debugging log
-        modal.classList.remove("active"); // Hide modal
+        console.log("Modal closed! ❌");
+        modal.classList.remove("active"); // ✅ Hide modal
     });
 });
 
-// ❌ Remove or replace prompt() and alert() inside main()
-function main() {
-    console.log("Vetra activated.");
-    // Instead of prompt(), dynamically update the modal
-}
 
 
 
