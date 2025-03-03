@@ -45,38 +45,72 @@
   </div>
 </div>
 
+<script>
+    async function main() {
+        let [tasks, dailyTasks] = await loadTasks(); 
+    
+        const menuOptions = `
+            THE INQUISITOR HAS DELIVERED YOU TO ME.
+            I AM VETRA, DAUGHTER OF THE INQUISITOR.
+    
+            STATE YOUR BURDENS, MORTAL.
+    
+            1: ADD BURDEN.
+            2: VIEW BURDENS.
+            3: SHED BURDENS.
+            4: PROGRESS REPORT.
+            5: SAVE AND EXIT.
+    
+            SPEAK A NUMERAL:
+        `;
+    
+        console.log(menuOptions);
+        document.getElementById("vetra-text").textContent = menuOptions; 
+    }
 
+    // HELPER FUNCTION 1 - Converts to 24-Hour Format
+    function convertTo24h(timeStr) {
+        const [time, modifier] = timeStr.split(' ');
+        let [hours, minutes] = time.split(':').map(Number);
+        if (modifier.toUpperCase() === 'PM' && hours < 12) hours += 12;
+        if (modifier.toUpperCase() === 'AM' && hours === 12) hours = 0;
+        return hours * 60 + minutes;
+    }
 
-    
+    // HELPER FUNCTION 2 - Converts to Minutes 
+    function convertDurationToMinutes(durationStr) {
+        let total = 0;
+        const parts = durationStr.match(/(\d+h)?\s?(\d+m)?/);
+        if (parts[1]) total += parseInt(parts[1]) * 60;
+        if (parts[2]) total += parseInt(parts[2]);
+        return total;
+    }
 
-    <script type="module">
-        document.addEventListener("DOMContentLoaded", () => {
-            console.log("✅ JavaScript Loaded!");
+    // UI EVENT LISTENERS
+    document.addEventListener("DOMContentLoaded", () => {
+        console.log("✅ JavaScript Loaded!");
     
-            const vetraBtn = document.getElementById("vetra-start-btn");
-            const modal = document.getElementById("vetra-modal");
-            const closeModal = document.getElementById("close-modal");
+        const vetraBtn = document.getElementById("vetra-start-btn");
+        const modal = document.getElementById("vetra-modal");
+        const closeModal = document.getElementById("close-modal");
+        const modalText = document.getElementById("vetra-text");
     
-            if (!vetraBtn || !modal || !closeModal) {
-                console.error("⚠️ Button or Modal not found! Check HTML.");
-                return;
-            }
+        if (!vetraBtn || !modal || !closeModal) {
+            console.error("⚠️ Button or Modal not found! Check HTML.");
+            return;
+        }
     
-            vetraBtn.addEventListener("click", () => {
-                console.log("🔥 BUTTON CLICKED!");
-                modal.classList.add("active");
-            });
-    
-            closeModal.addEventListener("click", () => {
-                modal.classList.remove("active");
-            });
+        vetraBtn.addEventListener("click", () => {
+            console.log("🔥 BUTTON CLICKED!");
+            modal.classList.add("active");
         });
-
-
-
-
-
-
+    
+        closeModal.addEventListener("click", () => {
+            modal.classList.remove("active");
+        });
+    });
+    
+    EVERYTHING UP GOOD -----------------------------------------------------------------------------------------------------
 
         
         // FIREBASE CONFIGURATION, IMPORTS AND INITIALIZATION
@@ -86,23 +120,8 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         
-        // CONVERT TIME TO 24-HOUR
-        function convertTo24h(timeStr) {
-            const [time, modifier] = timeStr.split(' ');
-            let [hours, minutes] = time.split(':').map(Number);
-            if (modifier.toUpperCase() === 'PM' && hours < 12) hours += 12;
-            if (modifier.toUpperCase() === 'AM' && hours === 12) hours = 0;
-            return hours * 60 + minutes;
-        }
 
-        // CONVERT 24-HOUR TO MINUTES    
-        function convertDurationToMinutes(durationStr) {
-            let total = 0;
-            const parts = durationStr.match(/(\d+h)?\s?(\d+m)?/);
-            if (parts[1]) total += parseInt(parts[1]) * 60;
-            if (parts[2]) total += parseInt(parts[2]);
-            return total;
-        }
+       
 
 
 
@@ -452,28 +471,8 @@
 
 
         
-  // ✅ Main program function (Uses UI-based interaction instead of infinite loop)
-async function main() {
-    let [tasks, dailyTasks] = await loadTasks(); // ✅ Ensure loadTasks() exists
 
-    const menuOptions = `
-        THE INQUISITOR HAS DELIVERED YOU TO ME.
-        I AM VETRA, DAUGHTER OF THE INQUISITOR.
 
-        STATE YOUR BURDENS, MORTAL.
-
-        1: ADD BURDEN.
-        2: VIEW BURDENS.
-        3: SHED BURDENS.
-        4: PROGRESS REPORT.
-        5: SAVE AND EXIT.
-
-        SPEAK A NUMERAL:
-    `;
-
-    console.log(menuOptions); // ✅ This replaces prompt()
-    document.getElementById("vetra-text").textContent = menuOptions; // ✅ Updates modal text dynamically
-}
 
 // ✅ Event Listeners (Ensures UI interaction works properly)
 document.addEventListener("DOMContentLoaded", () => {
