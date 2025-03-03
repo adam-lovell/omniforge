@@ -457,62 +457,6 @@
             }
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-
-
-
-// ✅ Event Listeners (Ensures UI interaction works properly)
-document.addEventListener("DOMContentLoaded", () => {
-    const vetraBtn = document.getElementById("vetra-start-btn");
-    const modal = document.getElementById("vetra-modal");
-    const closeModal = document.getElementById("close-modal");
-    const modalText = document.getElementById("vetra-text"); // ✅ UI Text Element
-
-    // ✅ Start Vetra when button is clicked
-    vetraBtn.addEventListener("click", () => {
-        console.log("Button clicked! ✅");
-        modal.classList.add("active"); // ✅ Show modal
-        main(); // ✅ Start program
-    });
-
-    // ✅ Close modal when "X" is clicked
-    closeModal.addEventListener("click", () => {
-        console.log("Modal closed! ❌");
-        modal.classList.remove("active"); // ✅ Hide modal
-    });
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
     </script>
 </body>
 </html>
