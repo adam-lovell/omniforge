@@ -470,25 +470,6 @@
     
             SPEAK A NUMERAL:
         `;
-    
-        while (true) {
-            let choice = prompt(menuOptions)?.trim();
-    
-            if (choice === "1") {
-                await addBurdens(tasks, dailyTasks);
-            } else if (choice === "2") {
-                await viewBurdens(tasks, dailyTasks);
-            } else if (choice === "3") {
-                await shedBurdens(tasks, dailyTasks);
-            } else if (choice === "4") {
-                await progressReport(tasks, dailyTasks);
-            } else if (choice === "5") {
-                await saveTasks(tasks, dailyTasks);
-                break;
-            } else {
-                alert("⚠️ INVALID, REFRAME YOUR INTENT!");
-            }
-        }
     }
 
 
