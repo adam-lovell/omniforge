@@ -486,13 +486,14 @@
 
         
     document.addEventListener("DOMContentLoaded", () => {
-    const vetraBtn = document.getElementById("vetra-start-btn");
-    const modal = document.getElementById("vetra-modal");
-    const closeModal = document.getElementById("close-modal");
-    const modalText = document.getElementById("vetra-text"); // 👈 New element inside modal
+        const vetraBtn = document.getElementById("vetra-start-btn");
+        const modal = document.getElementById("vetra-modal");
+        const closeModal = document.getElementById("close-modal");
+        const modalText = document.getElementById("vetra-text"); // 👈 New element inside modal
 
     // ✅ Start Vetra when button is clicked
     vetraBtn.addEventListener("click", () => {
+        console.log("Button clicked!"); // Debugging log
         modal.classList.add("active"); // Show modal
         modalText.textContent = "State your burdens, Mortal."; // 👈 Dynamically updates text instead of using prompt()
         main(); // Start program
@@ -500,6 +501,7 @@
 
     // ✅ Close modal when "X" is clicked
     closeModal.addEventListener("click", () => {
+        console.log("Modal closed!"); // Debugging log
         modal.classList.remove("active"); // Hide modal
     });
 });
