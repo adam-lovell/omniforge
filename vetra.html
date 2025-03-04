@@ -127,22 +127,28 @@
     document.getElementById("save-exit-btn").addEventListener("click", saveTasks);
 });
 </script> 
-
-
-
     
-<script>
+<script type="module"> // BEGIN SCRIPT 2 - Firebase Configuration & Initialization
+// Import Firebase Modules
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+    import { getFirestore, collection, doc, getDoc, setDoc, addDoc, getDocs, deleteDoc, query, where } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+        from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
 
+    // Import Firebase Config from External File
+    import { firebaseConfig } from './firebase-config.js';
+
+    // Initialize Firebase App
+    const app = initializeApp(firebaseConfig);
+
+    // Initialize Firestore Database
+    const db = getFirestore(app);    
+    
+    console.log("Firebase Initiliazed Successfully!");
 </script>
-    EVERYTHING UP GOOD -----------------------------------------------------------------------------------------------------
 
-        
-        // FIREBASE CONFIGURATION, IMPORTS AND INITIALIZATION
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
-        import { getFirestore, collection, doc, getDoc, setDoc, addDoc, getDocs, deleteDoc, query, where } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
-        import { firebaseConfig } from './firebase-config.js';
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+EVERYTHING UP GOOD -----------------------------------------------------------------------------------------------------
+    
+    
         
 
        
