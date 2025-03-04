@@ -195,306 +195,336 @@ async function loadTasks() {
     }
 }
 
-
-
-
-
-
-
-    
-
-
-
-    
-</script>
-EVERYTHING UP GOOD -----------------------------------------------------------------------------------------------------
-    
-    
-        
-
-       
-
-
-
-
-        
-        
-        // ADD BURDENS FUNCTION
-        async function addBurdens() {
-            const description = document.getElementById('task-description').value.trim();
-            const category = document.getElementById('task-category').value.trim();
-            const date = document.getElementById('task-date').value;
-            const time = document.getElementById('task-time').value.trim();
-            const duration = document.getElementById('task-duration').value.trim();
-            const isRecurring = document.getElementById('recurring-checkbox').checked;
-            const errorMessage = document.getElementById('error-message');
-        
-            // VALIDATE USER INPUT
-            if (!description || !category || !date || !time || !duration) {
-                errorMessage.textContent = "⚠️ REFRAME, MORTAL! COMPLETE ALL FIELDS.";
-                return;
-            }
-        
-            // VALIDATE CATEGORY 
-            if (!tasks[category]) {
-                errorMessage.textContent = "⚠️ INVALID CATEGORY. REFRAME YOUR INTENT!";
-                return;
-            }
-        
-            // Convert time and duration
-            const startTime24h = convertTo24h(time);
-            const durationMinutes = convertDurationToMinutes(duration);
-        
-            // Overlapping Task Check
-            const conflict = tasks[category].some(task => {
-                const existingStart = convertTo24h(task.start_time);
-                const existingEnd = existingStart + convertDurationToMinutes(task.duration);
-                const newEnd = startTime24h + durationMinutes;
-                return startTime24h < existingEnd && newEnd > existingStart;
-            });
-        
-            if (conflict) {
-                errorMessage.textContent = "⚠️ OVERLAPPING BURDEN DETECTED! REFRAME YOUR INTENT!";
-                return;
-            }
-        
-            // Create Task Object
-            const taskData = { description, category, date, start_time: time, duration };
-        
-            try {
-                if (isRecurring) {
-                    dailyTasks.push(taskData);
-                    await addDoc(collection(db, 'daily_tasks'), taskData);
-                    document.getElementById('task-list').innerHTML += `<p>🔄 RECURRING BURDEN '${description}' ADDED.</p>`;
-                } else {
-                    tasks[category].push(taskData);
-                    await addDoc(collection(db, 'tasks'), taskData);
-                    document.getElementById('task-list').innerHTML += `<p>📌 BURDEN '${description}' ADDED TO '${category}'.</p>`;
-                }
-            } catch (error) {
-                console.error("Error adding task:", error);
-                errorMessage.textContent = "❌ ERROR ADDING TASK!";
-            }
+// SAVE TASKS FUNCTION
+async function saveTasks(tasks = null, dailyTasks = null) {
+    try {
+        if (!db) {
+            throw new Error("⚠️ Firestore is not initialized.");
         }
+
+        // ✅ If tasks aren't passed, retrieve them
+        if (!tasks || !dailyTasks) {
+            console.warn("⚠️ No task data provided. Fetching from Firestore...");
+            [tasks, dailyTasks] = await loadTasks();
+        }
+
+        const tasksRef = doc(db, 'vetra', 'burdens');
+
+        await setDoc(tasksRef, { 
+            tasks, 
+            daily_tasks: dailyTasks, 
+            timestamp: new Date().toISOString()  // ✅ Ensures proper timestamp format
+        }, { merge: true });
+
+        alert("✅ BURDENS LOCKED, UNTIL WE MEET AGAIN, MORTAL.");
+    } catch (error) {
+        console.error("⚠️ ERROR SAVING TASKS:", error);
+        alert("⚠️ FAILED TO LOCK BURDENS. TRY AGAIN, MORTAL.");
+    }
+}
+
+
+    
+// ADD BURDENS FUNCTION
+async function addBurdens() {
+    try {
+        if (!db) {
+            throw new Error("⚠️ Firestore is not initialized.");
+        }
+
+        let [tasks, dailyTasks] = await loadTasks();
         
-        // Attach Event Listener (Ensures only one listener is added)
-        document.addEventListener("DOMContentLoaded", () => {
-            document.getElementById("add-burden-btn").addEventListener("click", addBurdens);
+        const description = document.getElementById('task-description').value.trim();
+        const category = document.getElementById('task-category')?.value.trim();
+        const date = document.getElementById('task-date')?.value;
+        const time = document.getElementById('task-time')?.value.trim();
+        const duration = document.getElementById('task-duration')?.value.trim();
+        const isRecurring = document.getElementById('recurring-checkbox')?.checked || false;
+        const errorMessage = document.getElementById('error-message');
+        const taskList = document.getElementById("task-list");
+
+        // ✅ Ensure format instructions remain visible
+        document.getElementById("burden-list").style.display = "block"; 
+
+        // ✅ Validate User Input
+        if (!description || !category || !date || !time || !duration) {
+            errorMessage.textContent = "⚠️ REFRAME, MORTAL! COMPLETE ALL FIELDS.";
+            return;
+        }
+
+        // ✅ Ensure category exists before validation
+        if (!tasks[category]) {
+            errorMessage.textContent = "⚠️ INVALID CATEGORY. REFRAME YOUR INTENT!";
+            return;
+        }
+
+        // ✅ Convert time and duration
+        const startTime24h = convertTo24h(time);
+        const durationMinutes = convertDurationToMinutes(duration);
+
+        // ✅ Overlapping Task Check
+        const conflict = tasks[category].some(task => {
+            const existingStart = convertTo24h(task.start_time);
+            const existingEnd = existingStart + convertDurationToMinutes(task.duration);
+            const newEnd = startTime24h + durationMinutes;
+            return startTime24h < existingEnd && newEnd > existingStart;
         });
 
+        if (conflict) {
+            errorMessage.textContent = "⚠️ OVERLAPPING BURDEN DETECTED! REFRAME YOUR INTENT!";
+            return;
+        }
 
+        // ✅ Create Task Object
+        const taskData = { description, category, date, start_time: time, duration };
 
+        // ✅ Add Task to Firestore
+        if (isRecurring) {
+            dailyTasks.push(taskData);
+            await addDoc(collection(db, 'daily_tasks'), taskData);
+            taskList.innerHTML += `<p>🔄 RECURRING BURDEN '${description}' ADDED.</p>`;
+        } else {
+            tasks[category].push(taskData);
+            await addDoc(collection(db, 'tasks'), taskData);
+            taskList.innerHTML += `<p>📌 BURDEN '${description}' ADDED TO '${category}'.</p>`;
+        }
 
+        console.log(`✅ Task Added: ${description}`);
 
-        
-        
-        
-        // VIEW BURDENS FUNCTION
-        async function viewBurdens() {
-            let [tasks, dailyTasks] = await loadTasks(); // ✅ Load tasks inside function
-        
-            let message = "📌 YOUR BURDENS:\n";
-            Object.keys(tasks).forEach(category => {
-                message += `\n🔹 ${category} (${tasks[category].length} BURDENS):\n`;
+    } catch (error) {
+        console.error("❌ ERROR ADDING TASK:", error);
+        document.getElementById('error-message').textContent = "❌ ERROR ADDING TASK!";
+    }
+}
+
+// VIEW BURDENS FUNCTION
+async function viewBurdens() {
+    try {
+        // ✅ Ensure Firestore is initialized
+        if (!db) {
+            throw new Error("⚠️ Firestore is not initialized.");
+        }
+
+        // ✅ Load tasks (guarantees fresh data)
+        let [tasks, dailyTasks] = await loadTasks(); 
+
+        // ✅ Ensure UI Burden List remains visible
+        const burdenList = document.getElementById("burden-list");
+        if (burdenList) {
+            burdenList.style.display = "block";
+        }
+
+        // ✅ Construct the Burdens Display Message
+        let message = "📌 **YOUR BURDENS:**\n";
+        Object.keys(tasks).forEach(category => {
+            if (tasks[category].length > 0) {
+                message += `\n🔹 **${category}** (${tasks[category].length} BURDENS):\n`;
                 tasks[category].forEach((task, index) => {
                     message += `  ${index + 1}. ${task.description} | ⏰ ${task.start_time} | 📅 ${task.date}\n`;
                 });
-            });
-        
-            if (dailyTasks.length > 0) {
-                message += "\n🔄 **RECURRING BURDENS:**\n";
-                dailyTasks.forEach((task, index) => {
-                    message += `  ${index + 1}. ${task.description} | ⏰ ${task.start_time || "TBD"} (DAILY)\n`;
-                });
             }
-        
-            alert(message);
+        });
+
+        // ✅ Include Recurring Burdens
+        if (dailyTasks.length > 0) {
+            message += "\n🔄 **RECURRING BURDENS:**\n";
+            dailyTasks.forEach((task, index) => {
+                message += `  ${index + 1}. ${task.description} | ⏰ ${task.start_time || "TBD"} (DAILY)\n`;
+            });
         }
 
+        // ✅ Ensure message isn't empty
+        if (message.trim() === "📌 **YOUR BURDENS:**\n") {
+            message += "⚠️ **NO BURDENS FOUND. YOU ARE EITHER FREE OR LAZY.**";
+        }
 
+        // ✅ Display Burdens in UI (Instead of Only Using alert)
+        const taskList = document.getElementById("task-list");
+        if (taskList) {
+            taskList.innerHTML = `<pre>${message}</pre>`; // ✅ Displays tasks in a readable format
+        }
 
+        // ✅ Show the alert as a backup (if no UI element found)
+        alert(message);
 
+    } catch (error) {
+        console.error("❌ ERROR VIEWING BURDENS:", error);
+        alert("⚠️ FAILED TO RETRIEVE BURDENS. CHECK YOUR CONNECTION, MORTAL.");
+    }
+}
 
+// SHED BURDENS FUNCTION
+async function shedBurdens() {
+    try {
+        // ✅ Ensure Firestore is initialized
+        if (!db) {
+            throw new Error("⚠️ Firestore is not initialized.");
+        }
 
-        
+        // ✅ Load tasks & display them before removal
+        let [tasks, dailyTasks] = await loadTasks();
+        await viewBurdens(); // ✅ Show burdens before deletion
 
+        // ✅ Prompt user for category input
+        const categoryInput = prompt("\nENTER THE CATEGORY OF THE BURDEN TO REMOVE:\n\nCATEGORY:").trim();
+        if (!tasks.hasOwnProperty(categoryInput)) {
+            alert("⚠️ INVALID CATEGORY. REFRAME YOUR INTENT!");
+            return;
+        }
 
+        // ✅ Firestore Queries (Retrieve Specific Tasks)
+        const burdensRef = collection(db, "tasks");
+        const recurringRef = collection(db, "daily_tasks");
+
+        const q = query(burdensRef, where("category", "==", categoryInput));
+        const recurringQ = query(recurringRef, where("category", "==", categoryInput));
+
+        const snapshot = await getDocs(q);
+        const recurringSnapshot = await getDocs(recurringQ);
+
+        // ✅ Handle No Burdens Case
+        if (snapshot.empty && recurringSnapshot.empty) {
+            alert("⚠️ NO BURDENS IN THIS CATEGORY.");
+            return;
+        }
+
+        // ✅ Display tasks for selection
+        let taskMapping = {};
+        let message = `📌 BURDENS IN '${categoryInput}':\n`;
+        let index = 1;
+
+        // ✅ Regular Tasks
+        snapshot.forEach((doc) => {
+            const task = doc.data();
+            taskMapping[index] = { id: doc.id, type: "regular", ...task };
+            message += `${index}. ${task.description} | ⏰ ${task.start_time} | 📅 ${task.date}\n`;
+            index++;
+        });
+
+        // ✅ Recurring Tasks
+        recurringSnapshot.forEach((doc) => {
+            const task = doc.data();
+            taskMapping[index] = { id: doc.id, type: "recurring", ...task };
+            message += `${index}. ${task.description} | ⏰ ${task.start_time} | 📅 ${task.date} (RECURRING)\n`;
+            index++;
+        });
+
+        // ✅ Prompt user for specific task selection
+        const taskNumInput = prompt(`${message}\nENTER BURDEN NUMBER TO REMOVE:`).trim();
+        const taskNum = parseInt(taskNumInput);
+
+        if (!taskMapping[taskNum]) {
+            alert("⚠️ INVALID NUMBER. REFRAME YOUR INTENT!");
+            return;
+        }
+
+        // ✅ Delete Selected Task from Firestore
+        const selectedTask = taskMapping[taskNum];
+        const collectionName = selectedTask.type === "regular" ? "tasks" : "daily_tasks";
+
+        await deleteDoc(doc(db, collectionName, selectedTask.id));
+        alert(`✅ BURDEN '${selectedTask.description}' LIFTED.`);
         
-        
-        // SHED BURDENS FUNCTION
-        async function shedBurdens(tasks, dailyTasks) {
-            await viewBurdens(tasks, dailyTasks); // ✅ Show current burdens before removal
-        
-            const categoryInput = prompt("\nENTER THE CATEGORY OF THE BURDEN TO REMOVE:\n\nCATEGORY:").trim();
-            if (!tasks.hasOwnProperty(categoryInput)) {
-                alert("⚠️ INVALID CATEGORY. REFRAME YOUR INTENT!");
-                return;
-            }
-        
-            // Firestore queries for regular and recurring tasks
-            const burdensRef = collection(db, "tasks");
-            const recurringRef = collection(db, "daily_tasks");
-        
-            const q = query(burdensRef, where("category", "==", categoryInput));
-            const recurringQ = query(recurringRef, where("category", "==", categoryInput));
-        
-            const snapshot = await getDocs(q);
-            const recurringSnapshot = await getDocs(recurringQ);
-        
-            if (snapshot.empty && recurringSnapshot.empty) {
-                alert("⚠️ NO BURDENS IN THIS CATEGORY.");
-                return;
-            }
-        
-            let taskMapping = {};
-            let message = `📌 BURDENS IN '${categoryInput}':\n`;
-            let index = 1;
-        
-            // Regular Tasks
-            snapshot.forEach((doc) => {
-                const task = doc.data();
-                taskMapping[index] = { id: doc.id, type: "regular", ...task };
-                message += `${index}. ${task.description} | ⏰ ${task.start_time} | 📅 ${task.date}\n`;
-                index++;
-            });
-        
-            // Recurring Tasks
-            recurringSnapshot.forEach((doc) => {
-                const task = doc.data();
-                taskMapping[index] = { id: doc.id, type: "recurring", ...task };
-                message += `${index}. ${task.description} | ⏰ ${task.start_time} | 📅 ${task.date} (RECURRING)\n`;
-                index++;
-            });
-        
-            // Ask for which burden to remove
-            const taskNumInput = prompt(`${message}\nENTER BURDEN NUMBER TO REMOVE:`).trim();
-            const taskNum = parseInt(taskNumInput);
-        
-            if (!taskMapping[taskNum]) {
-                alert("⚠️ INVALID NUMBER. REFRAME YOUR INTENT!");
-                return;
-            }
-        
-            // Determine if it's a regular or recurring task, then delete it
-            const selectedTask = taskMapping[taskNum];
-            const collectionName = selectedTask.type === "regular" ? "tasks" : "daily_tasks";
-        
+        // ✅ Refresh Task List UI After Deletion
+        await viewBurdens(); 
+
+    } catch (error) {
+        console.error("❌ ERROR SHEDDING BURDEN:", error);
+        alert("⚠️ FAILED TO REMOVE BURDEN. TRY AGAIN, MORTAL.");
+    }
+}
+
+// PROGRESS REPORT FUNCTION
+async function progressReport() {
+    try {
+        // ✅ Ensure Firestore is initialized
+        if (!db) {
+            throw new Error("⚠️ Firestore is not initialized.");
+        }
+
+        alert("📜 PROGRESS REPORT: REVIEW YOUR BURDENS.\n");
+
+        let allTasks = [];
+        let taskMapping = {};
+        let index = 1;
+
+        // ✅ Load tasks from Firebase
+        const tasksSnapshot = await getDocs(collection(db, "tasks"));
+        const dailyTasksSnapshot = await getDocs(collection(db, "daily_tasks"));
+
+        // ✅ Regular tasks
+        tasksSnapshot.forEach((doc) => {
+            const data = doc.data();
+            taskMapping[index] = { id: doc.id, category: data.category, task: data };
+            allTasks.push(`${index}. ${data.description} | ⏰ ${data.start_time} | 📅 ${data.date} (${data.category})`);
+            index++;
+        });
+
+        // ✅ Recurring tasks
+        dailyTasksSnapshot.forEach((doc) => {
+            const data = doc.data();
+            taskMapping[index] = { id: doc.id, category: "Recurring", task: data };
+            let taskTime = data.start_time ? data.start_time : "TBD";
+            allTasks.push(`${index}. ${data.description} | ⏰ ${taskTime} (RECURRING)`);
+            index++;
+        });
+
+        // ✅ Handle No Burdens Case
+        if (allTasks.length === 0) {
+            alert("⚠️ NO BURDENS TO UPDATE.");
+            return;
+        }
+
+        // ✅ Show all tasks & Prompt for Selection
+        let taskList = allTasks.join("\n");
+        let choice = prompt(`📌 YOUR BURDENS:\n${taskList}\n\nENTER THE NUMBER OF THE BURDEN TO UPDATE:`).trim();
+        let taskNum = parseInt(choice);
+
+        if (!taskMapping.hasOwnProperty(taskNum)) {
+            alert("⚠️ INVALID CHOICE.");
+            return;
+        }
+
+        let selectedTask = taskMapping[taskNum];
+        let task = selectedTask.task;
+
+        // ✅ Action Prompt (Complete, Postpone, or Cancel)
+        let action = prompt(`\nWHAT SHALL BE DONE?\n1. MARK AS COMPLETED ✅\n2. POSTPONE 🔄\n3. CANCEL ❌\n\nSPEAK A NUMERAL:`).trim();
+
+        if (action === "1") {
+            // 🔥 Remove completed task from Firestore
+            let collectionName = selectedTask.category === "Recurring" ? "daily_tasks" : "tasks";
             await deleteDoc(doc(db, collectionName, selectedTask.id));
-            alert(`✅ BURDEN '${selectedTask.description}' LIFTED.`);
-        }
+            alert(`✅ BURDEN '${task.description}' LIFTED.`);
+            await viewBurdens(); // ✅ Refresh UI After Completion
 
-
-
-
-
-
-
-
-
-
-
-
-
-        
-        // PROGRESS REPORT FUNCTION
-        async function progressReport(tasks, dailyTasks) {
-            alert("📜 PROGRESS REPORT: REVIEW YOUR BURDENS.\n");
-        
-            let allTasks = [];
-            let taskMapping = {};
-            let index = 1;
-        
-            // Load tasks from Firebase
-            const tasksSnapshot = await getDocs(collection(db, "tasks"));
-            const dailyTasksSnapshot = await getDocs(collection(db, "daily_tasks"));
-        
-            // Regular tasks
-            tasksSnapshot.forEach((doc) => {
-                const data = doc.data();
-                taskMapping[index] = { id: doc.id, category: data.category, task: data };
-                allTasks.push(`${index}. ${data.description} | ⏰ ${data.start_time} | 📅 ${data.date} (${data.category})`);
-                index++;
-            });
-        
-            // Recurring tasks
-            dailyTasksSnapshot.forEach((doc) => {
-                const data = doc.data();
-                taskMapping[index] = { id: doc.id, category: "Recurring", task: data };
-                let taskTime = data.start_time ? data.start_time : "TBD";
-                allTasks.push(`${index}. ${data.description} | ⏰ ${taskTime} (RECURRING)`);
-                index++;
-            });
-        
-            if (allTasks.length === 0) {
-                alert("⚠️ NO BURDENS TO UPDATE.");
+        } else if (action === "2") {
+            // 🔥 Postpone task
+            let newDate = prompt("ENTER NEW DATE (YYYY-MM-DD):").trim();
+            if (!newDate.match(/^\d{4}-\d{2}-\d{2}$/)) {
+                alert("⚠️ INVALID DATE FORMAT. UPDATE FAILED.");
                 return;
             }
-        
-            // Show all tasks
-            let taskList = allTasks.join("\n");
-            let choice = prompt(`📌 YOUR BURDENS:\n${taskList}\n\nENTER THE NUMBER OF THE BURDEN TO UPDATE:`).trim();
-            let taskNum = parseInt(choice);
-        
-            if (!taskMapping.hasOwnProperty(taskNum)) {
-                alert("⚠️ INVALID CHOICE.");
-                return;
-            }
-        
-            let selectedTask = taskMapping[taskNum];
-            let task = selectedTask.task;
-        
-            // Options for the user
-            let action = prompt(`\nWHAT SHALL BE DONE?\n1. MARK AS COMPLETED ✅\n2. POSTPONE 🔄\n3. CANCEL ❌\n\nSPEAK A NUMERAL:`).trim();
-        
-            if (action === "1") {
-                // 🔥 Remove completed task from Firestore
-                let collectionName = selectedTask.category === "Recurring" ? "daily_tasks" : "tasks";
-                await deleteDoc(doc(db, collectionName, selectedTask.id));
-                alert(`✅ BURDEN '${task.description}' LIFTED.`);
-        
-            } else if (action === "2") {
-                // 🔥 Postpone task
-                let newDate = prompt("ENTER NEW DATE (YYYY-MM-DD):").trim();
-                if (!newDate.match(/^\d{4}-\d{2}-\d{2}$/)) {
-                    alert("⚠️ INVALID DATE FORMAT. UPDATE FAILED.");
-                    return;
-                }
-        
-                let collectionName = selectedTask.category === "Recurring" ? "daily_tasks" : "tasks";
-                let taskRef = doc(db, collectionName, selectedTask.id);
-                await updateDoc(taskRef, { date: newDate });  // ✅ Use `updateDoc()` instead of `setDoc()`
-        
-                alert(`🔄 BURDEN '${task.description}' MOVED TO ${newDate}.`);
-        
-            } else if (action === "3") {
-                alert("❌ UPDATE CANCELED.");
-        
-            } else {
-                alert("⚠️ INVALID CHOICE.");
-            }
+
+            let collectionName = selectedTask.category === "Recurring" ? "daily_tasks" : "tasks";
+            let taskRef = doc(db, collectionName, selectedTask.id);
+            await updateDoc(taskRef, { date: newDate });  // ✅ Use `updateDoc()` instead of `setDoc()`
+
+            alert(`🔄 BURDEN '${task.description}' MOVED TO ${newDate}.`);
+            await viewBurdens(); // ✅ Refresh UI After Postponement
+
+        } else if (action === "3") {
+            alert("❌ UPDATE CANCELED.");
+
+        } else {
+            alert("⚠️ INVALID CHOICE.");
         }
 
-
-
-
-
-
-
-
-        
-        
-       // ✅ Save tasks to Firebase Firestore (prevents overwriting)
-       async function saveTasks(tasks, dailyTasks) {
-           try {
-               const tasksRef = doc(db, 'vetra', 'burdens');
-               await setDoc(tasksRef, { tasks, daily_tasks: dailyTasks, timestamp: new Date() }, { merge: true }); // ✅ Prevents overwriting
-               alert("✅ BURDENS LOCKED, UNTIL WE MEET AGAIN, MORTAL.");
-           } catch (error) {
-               console.error("⚠️ ERROR SAVING TASKS:", error);
-               alert("⚠️ FAILED TO LOCK BURDENS. TRY AGAIN, MORTAL.");
-           }
-       }
-
-
+    } catch (error) {
+        console.error("❌ ERROR IN PROGRESS REPORT:", error);
+        alert("⚠️ FAILED TO UPDATE BURDEN. TRY AGAIN, MORTAL.");
+    }
+}
+</script>
 </body>
 </html>
