@@ -148,6 +148,65 @@
     console.log("Firebase Initiliazed Successfully!");
 </script>
 
+<script> // BEGIN SCRIPT 3 - Task & Burden Logic
+
+// LOAD TASKS FUNCTION
+async function loadTasks() {
+    try {
+        if (!db) {
+            throw new Error("⚠️ Firestore is not initialized.");
+        }
+        
+        const tasksRef = doc(db, 'vetra', 'burdens');
+        const docSnap = await getDoc(tasksRef);
+        
+        if (docSnap.exists()) {
+            const data = docSnap.data();
+            return [
+                data.tasks ?? {
+                    "Urgent & Important": [],
+                    "Not Urgent but Important": [],
+                    "Urgent but Not Important": [],
+                    "Not Urgent & Not Important": []
+                },
+                data.daily_tasks || []
+            ];
+        } 
+
+        console.warn("⚠️ No saved burdens found. Initializing empty task list.");
+        return [
+            {
+                "Urgent & Important": [],
+                "Not Urgent but Important": [],
+                "Urgent but Not Important": [],
+                "Not Urgent & Not Important": []
+            },
+            []
+        ];        
+    } catch (error) {
+        console.error("⚠️ ERROR LOADING TASKS:", error);
+        alert("⚠️ FAILED TO RETRIEVE BURDENS. CHECK YOUR CONNECTION, MORTAL.");
+        return [{
+            "Urgent & Important": [],
+            "Not Urgent but Important": [],
+            "Urgent but Not Important": [],
+            "Not Urgent & Not Important": []
+        }, []];
+    }
+}
+
+
+
+
+
+
+
+    
+
+
+
+    
+</script>
 EVERYTHING UP GOOD -----------------------------------------------------------------------------------------------------
     
     
@@ -437,58 +496,5 @@ EVERYTHING UP GOOD -------------------------------------------------------------
        }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-
-        // ✅ Load tasks from Firebase Firestore (ensures no missing properties)
-        async function loadTasks() {
-            try {
-                const tasksRef = doc(db, 'vetra', 'burdens');
-                const docSnap = await getDoc(tasksRef);
-        
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
-                    return [
-                        data.tasks || {
-                            "Urgent & Important": [],
-                            "Not Urgent but Important": [],
-                            "Urgent but Not Important": [],
-                            "Not Urgent & Not Important": []
-                        },
-                        data.daily_tasks || []
-                    ];
-                } else {
-                    return [{
-                        "Urgent & Important": [],
-                        "Not Urgent but Important": [],
-                        "Urgent but Not Important": [],
-                        "Not Urgent & Not Important": []
-                    }, []];
-                }
-            } catch (error) {
-                console.error("⚠️ ERROR LOADING TASKS:", error);
-                alert("⚠️ FAILED TO RETRIEVE BURDENS. CHECK YOUR CONNECTION, MORTAL.");
-                return [{
-                    "Urgent & Important": [],
-                    "Not Urgent but Important": [],
-                    "Urgent but Not Important": [],
-                    "Not Urgent & Not Important": []
-                }, []];
-            }
-        }
-
-    </script>
 </body>
 </html>
