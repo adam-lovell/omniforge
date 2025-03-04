@@ -19,6 +19,8 @@
     <button id="close-modal">CANCEL</button>
     <h2>THE INQUISITOR HAS DELIVERED YOU TO ME.</h2>
     <p>I AM VETRA, DAUGHTER OF THE INQUISITOR.<br>STATE YOUR BURDENS, MORTAL.</p>
+    <p id="vetra-text"></p>
+
 
     <div id="burden-list"></div>
     <button onclick="viewBurdens()">View Burdens</button>
@@ -111,8 +113,8 @@
     
         vetraBtn.addEventListener("click", () => {
             console.log("🔥 BUTTON CLICKED!");
-            modal.classList.add("active");
             main();
+            modal.classList.add("active");
         });
     
         closeModal.addEventListener("click", () => {
@@ -131,7 +133,7 @@
 <script type="module"> // BEGIN SCRIPT 2 - Firebase Configuration & Initialization
 // Import Firebase Modules
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
-    import { getFirestore, collection, doc, getDoc, setDoc, addDoc, getDocs, deleteDoc, query, where } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+    import { getFirestore, collection, doc, getDoc, setDoc, addDoc, getDocs, deleteDoc, query, where } 
         from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
 
     // Import Firebase Config from External File
