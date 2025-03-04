@@ -151,3 +151,14 @@ button:hover {
 body.modal-open {
     overflow: hidden;
 }
+
+/* 🔹 Adds more spacing between buttons */
+.choices button {
+    margin-bottom: 20px; /* Increase spacing between buttons */
+}
+
+/* 🔹 If buttons are inside a flex container */
+.choices {
+    gap: 25px; /* More spacing between each button */
+}
+
