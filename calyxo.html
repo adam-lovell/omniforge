@@ -1,1 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CALYXO - ARCHITECT OF VITALITY</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <img id="calyxo-logo" src="images/omniforge_logo.jpg" alt="CALYXO Logo">
+        <h1 class="title">CALYXO - ARCHITECT OF VITALITY</h1>
+        <button id="calyxo-start-btn">STATE YOUR NUTRITIONAL OFFERINGS</button>
+    </div>
+    
+    <div id="calyxo-modal" class="modal">
+        <div class="modal-content">
+            <p id="error-message" style="color: red;"></p> 
+            <button id="close-modal">CANCEL</button>
+            <h2>YOU HAVE SUMMONED CALYXO.</h2>
+            <p>I AM CALYXO, ARCHITECT OF VITALITY.<br>STATE YOUR CONSUMPTION, MORTAL.</p>
+            <p id="calyxo-text"></p>
+
+            <div id="calorie-list"></div>
+            
+            <p>
+                **ENTER YOUR OFFERINGS:** <br>
+                FORMAT AS: FOOD NAME, CALORIES <br>
+                SEPARATE ENTRIES WITH ';'
+            </p>
+
+            <input type="text" id="food-name" placeholder="Food Name">
+            <input type="number" id="calories" placeholder="Calories">
+            <button id="add-calories-btn">Submit Offering</button>
+
+            <h3>YOUR CONSUMPTION RECORDS:</h3>
+            <div id="food-log"></div>
+
+            <h3>Total Calories: <span id="total-calories">0</span> kcal</h3>
+
+            <button onclick="viewCalories()">View Offerings</button>
+            <button onclick="shedCalories()">Shed Burdens</button>
+            <button onclick="saveAndExit()">Save and Exit</button>
+        </div>
+    </div>
+
+    <script> // EMBEDDED JAVASCRIPT BEGINS
+
+    let totalCalories = 0;
+    let foodLog = [];
+
+    document.addEventListener("DOMContentLoaded", () => {
+        console.log("✅ CALYXO is Ready!");
+
+        const startBtn = document.getElementById("calyxo-start-btn");
+        const modal = document.getElementById("calyxo-modal");
+        const closeModal = document.getElementById("close-modal");
+        const calorieDisplay = document.getElementById("total-calories");
+        const foodList = document.getElementById("food-log");
+        const errorMessage = document.getElementById("error-message");
+
+        startBtn.addEventListener("click", () => {
+            console.log("🔥 CALYXO SUMMONED!");
+            modal.classList.add("active");
+        });
+
+        closeModal.addEventListener("click", () => {
+            modal.classList.remove("active");
+        });
+
+        document.getElementById("add-calories-btn").addEventListener("click", () => {
+            const foodName = document.getElementById("food-name").value.trim();
+            const calories = parseInt(document.getElementById("calories").value);
+
+            if (!foodName || isNaN(calories) || calories <= 0) {
+                errorMessage.textContent = "⚠️ INVALID OFFERING. TRY AGAIN, MORTAL.";
+                return;
+            }
+
+            totalCalories += calories;
+            foodLog.push({ foodName, calories });
+
+            const foodEntry = document.createElement("p");
+            foodEntry.textContent = `🍽️ ${foodName}: ${calories} kcal`;
+            foodList.appendChild(foodEntry);
+
+            calorieDisplay.textContent = totalCalories;
+            errorMessage.textContent = "";
+            
+            // Clear input fields
+            document.getElementById("food-name").value = "";
+            document.getElementById("calories").value = "";
+        });
+    });
+
+    function viewCalories() {
+        if (foodLog.length === 0) {
+            alert("⚠️ NO ENTRIES FOUND. HAVE YOU EVEN EATEN, MORTAL?");
+            return;
+        }
+
+        let message = "📜 **YOUR CONSUMPTION RECORD:**\n";
+        foodLog.forEach((entry, index) => {
+            message += `${index + 1}. 🍽️ ${entry.foodName}: ${entry.calories} kcal\n`;
+        });
+
+        alert(message);
+    }
+
+    function shedCalories() {
+        if (foodLog.length === 0) {
+            alert("⚠️ YOU HAVE NO BURDENS TO SHED.");
+            return;
+        }
+
+        let selection = prompt("ENTER THE NUMBER OF THE FOOD TO REMOVE:").trim();
+        let index = parseInt(selection) - 1;
+
+        if (isNaN(index) || index < 0 || index >= foodLog.length) {
+            alert("⚠️ INVALID CHOICE. TRY AGAIN.");
+            return;
+        }
+
+        totalCalories -= foodLog[index].calories;
+        foodLog.splice(index, 1);
+
+        document.getElementById("total-calories").textContent = totalCalories;
+        document.getElementById("food-log").children[index].remove();
+
+        alert("✅ BURDEN LIFTED.");
+    }
+
+    function saveAndExit() {
+        alert("✅ CALYXO HAS RECORDED YOUR OFFERINGS.");
+    }
+
+    </script> <!-- JAVASCRIPT ENDS -->
+
+</body>
+</html>
 
