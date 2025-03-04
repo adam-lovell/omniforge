@@ -12,29 +12,44 @@ body {
     align-items: center;
     height: 100vh;
     padding: 20px;
+
+    /* 🔹 Cyber Tech Background */
+    background-image: 
+        radial-gradient(circle at center, rgba(13, 197, 255, 0.15) 0%, transparent 70%),
+        url('images/cyber-grid.png'), /* Add a cyber-style grid overlay */
+        linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(13, 197, 255, 0.1));
+    background-size: cover, 100%, 100%;
+    background-blend-mode: overlay;
 }
 
+/* 🔹 Cyberpunk Glow Effect */
 .container {
     max-width: 700px;
     padding: 20px;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(13, 197, 255, 0.3);
+    box-shadow: 0 0 15px rgba(13, 197, 255, 0.5);
+    border-radius: 10px;
+    background: rgba(15, 15, 25, 0.8);
 }
 
 .title {
     font-size: 3rem;
     text-transform: uppercase;
     letter-spacing: 5px;
-    text-shadow: 0 0 20px #0DC5FF; /* Electric Blue Glow */
+    text-shadow: 0 0 20px #0DC5FF, 0 0 40px rgba(13, 197, 255, 0.8); /* Electric Blue Glow */
 }
 
+/* 🔹 Enhanced Logo Effect */
 #vetra-logo {
     display: block;
     margin: 20px auto;
     width: 300px; /* Adjust size */
     height: auto;
-    filter: drop-shadow(0 0 10px cyan); /* Tech Glow Effect */
+    filter: drop-shadow(0 0 20px rgba(13, 197, 255, 0.8)); /* Stronger Glow */
 }
 
-/* Button Styling */
+/* 🔹 Button Styling - Cyberpunk */
 .choices {
     display: flex;
     flex-direction: column;
@@ -53,28 +68,30 @@ button {
     transition: 0.3s ease-in-out;
     font-family: 'Cinzel', serif;
     letter-spacing: 2px;
-    border-radius: 5px;
-    box-shadow: 0px 4px 10px rgba(13, 197, 255, 0.6);
+    border-radius: 8px;
+    box-shadow: 0px 4px 15px rgba(13, 197, 255, 0.8);
+    text-transform: uppercase;
 }
 
 button:hover {
     background: linear-gradient(45deg, #003366, #0DC5FF);
-    transform: scale(1.05);
+    transform: scale(1.08);
+    box-shadow: 0 0 30px rgba(13, 197, 255, 1);
 }
 
-/* Hide elements */
+/* 🔹 Hide elements */
 .hidden {
     display: none;
 }
 
-/* Response Text */
+/* 🔹 Response Text */
 #response-text {
     margin-top: 20px;
     font-size: 1.2rem;
-    text-shadow: 0 0 10px #0DC5FF;
+    text-shadow: 0 0 10px #0DC5FF, 0 0 25px rgba(13, 197, 255, 0.8);
 }
 
-/* VETRA Modal Styling */
+/* 🔹 MODAL FIX + CYBER DESIGN */
 .modal {
     display: none;
     position: fixed;
@@ -82,34 +99,55 @@ button:hover {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    background-color: #1A1F2E; /* Deep Blue-Gray */
+    background-color: rgba(15, 15, 25, 0.95); /* Slight transparency */
     color: #F5C518; /* Gold */
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0px 5px 15px rgba(13, 197, 255, 0.5); /* Blue Glow */
-    width: 80%;
-    max-width: 400px;
+    box-shadow: 0px 5px 20px rgba(13, 197, 255, 0.8); /* Glowing effect */
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh; /* Fixes cut-off issue */
+    overflow-y: auto; /* Allows scrolling if content overflows */
 }
 
+/* 🔹 Fixes the Cut-Off Issue */
 .modal.active {
     display: block;
 }
 
 .modal h2 {
     font-size: 1.5rem;
-    text-shadow: 0 0 5px #F5C518; /* Gold Glow */
+    text-shadow: 0 0 10px #F5C518, 0 0 20px rgba(245, 197, 24, 0.8);
 }
 
+/* 🔹 Cyberpunk Glow */
 .modal p {
     font-size: 1.2rem;
+    text-shadow: 0 0 10px rgba(245, 197, 24, 0.8);
 }
 
-.modal button {
-    margin-top: 15px;
-    background: #0DC5FF;
-    padding: 10px;
-    font-size: 1rem;
+/* 🔹 Ensure modal content is scrollable */
+.modal-content {
+    max-height: 75vh;
+    overflow-y: auto;
+    padding: 15px;
+}
+
+/* 🔹 Close Button */
+#close-modal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: red;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-weight: bold;
     border-radius: 5px;
 }
 
-
+/* 🔹 Prevent Body Scroll when Modal is Open */
+body.modal-open {
+    overflow: hidden;
+}
