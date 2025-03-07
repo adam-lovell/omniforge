@@ -99,7 +99,6 @@
 
     // UI EVENT LISTENERS
     document.addEventListener("DOMContentLoaded", () => {
-        console.log("✅ JavaScript Loaded!");
     
         const vetraBtn = document.getElementById("vetra-start-btn");
         const modal = document.getElementById("vetra-modal");
@@ -112,7 +111,6 @@
         }
     
         vetraBtn.addEventListener("click", () => {
-            console.log("🔥 BUTTON CLICKED!");
             main();
             modal.classList.add("active");
         });
@@ -123,7 +121,6 @@
 
     // ADD BURDEN BUTTONS
     document.getElementById("add-burden-btn").addEventListener("click", addBurdens);
-    document.getElementById("view-burdens-btn").addEventListener("click", viewBurdens);
     document.getElementById("shed-burdens-btn").addEventListener("click", shedBurdens);
     document.getElementById("progress-report-btn").addEventListener("click", progressReport);
     document.getElementById("save-exit-btn").addEventListener("click", saveTasks);
