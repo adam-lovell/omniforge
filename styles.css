@@ -60,15 +60,15 @@ body {
 button {
     background: linear-gradient(45deg, #0DC5FF, #003366); /* Blue gradient */
     color: black;
-    padding: 15px 30px;
-    font-size: 1.2rem;
+    padding: 10px 20px;
+    font-size: 1rem;
     font-weight: bold;
     border: none;
     cursor: pointer;
     transition: 0.3s ease-in-out;
     font-family: 'Cinzel', serif;
     letter-spacing: 2px;
-    border-radius: 8px;
+    border-radius: 6px;
     box-shadow: 0px 4px 15px rgba(13, 197, 255, 0.8);
     text-transform: uppercase;
 }
@@ -105,7 +105,7 @@ button:hover {
     border-radius: 10px;
     box-shadow: 0px 5px 20px rgba(13, 197, 255, 0.8); /* Glowing effect */
     width: 90%;
-    max-width: 500px;
+    max-width: 250px;
     max-height: 80vh; /* Fixes cut-off issue */
     overflow-y: auto; /* Allows scrolling if content overflows */
 }
