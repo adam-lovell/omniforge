@@ -1,5 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap');
 
+#omniforge-logo {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    width: 120px;  /* Adjust as needed */
+    height: auto;
+    z-index: 1000; /* Ensures it stays above everything */
+    filter: drop-shadow(0 0 10px rgba(13, 197, 255, 0.8)); /* Glowing effect */
+    transition: transform 0.3s ease-in-out;
+}
+
+#omniforge-logo:hover {
+    transform: scale(1.1);
+}
+
 body {
     background-color: #0D1117; /* Dark Blue-Gray */
     color: #F5C518; /* Gold */
