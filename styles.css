@@ -4,7 +4,7 @@
     position: fixed;
     top: 15px;
     right: 15px;
-    width: 120px;  /* Adjust as needed */
+    width: 80px;  /* Adjust as needed */
     height: auto;
     z-index: 1000; /* Ensures it stays above everything */
     filter: drop-shadow(0 0 10px rgba(13, 197, 255, 0.8)); /* Glowing effect */
