@@ -47,24 +47,6 @@
     // MAIN UI FUNCTION
     async function main() {
         let [tasks, dailyTasks] = await loadTasks(); 
-    
-        const menuOptions = `
-            THE INQUISITOR HAS DELIVERED YOU TO ME.
-            
-            I AM VETRA, DAUGHTER OF THE INQUISITOR.
-    
-            STATE YOUR BURDENS, MORTAL.
-    
-            1: ADD BURDEN.
-            2: VIEW BURDENS.
-            3: SHED BURDENS.
-            4: PROGRESS REPORT.
-            5: SAVE AND EXIT.
-    
-            SPEAK A NUMERAL:
-        `;
-    
-        console.log(menuOptions);
         const vetraText = document.getElementById("vetra-text");
         if (vetraText) {
             vetraText.textContent = menuOptions;
