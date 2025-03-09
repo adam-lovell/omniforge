@@ -106,9 +106,8 @@ button:hover {
     text-shadow: 0 0 10px #0DC5FF, 0 0 25px rgba(13, 197, 255, 0.8);
 }
 
-/* 🔹 MODAL FIX + CYBER DESIGN */
 .modal {
-    display: none;
+     display: none;
     position: fixed;
     z-index: 1000;
     left: 50%;
@@ -116,36 +115,37 @@ button:hover {
     transform: translate(-50%, -50%);
     background-color: rgba(15, 15, 25, 0.95); /* Slight transparency */
     color: #F5C518; /* Gold */
-    padding: 20px;
+    padding: 30px; /* Increased padding for better spacing */
     border-radius: 10px;
-    box-shadow: 0px 5px 20px rgba(13, 197, 255, 0.8); /* Glowing effect */
+    box-shadow: 0px 5px 20px rgba(13, 197, 255, 0.8);
     width: 90%;
-    max-width: 250px;
-    max-height: 80vh; /* Fixes cut-off issue */
-    overflow-y: auto; /* Allows scrolling if content overflows */
+    max-width: 500px; /* Increased width */
+    max-height: 85vh; /* Prevents cutting off */
+    overflow-y: auto; /* Allows scrolling if too much content */
 }
 
-/* 🔹 Fixes the Cut-Off Issue */
 .modal.active {
     display: block;
 }
 
 .modal h2 {
-    font-size: 1.5rem;
-    text-shadow: 0 0 10px #F5C518, 0 0 20px rgba(245, 197, 24, 0.8);
+    font-size: 1.8rem;
+    text-shadow: 0 0 10px #F5C518;
 }
 
 /* 🔹 Cyberpunk Glow */
 .modal p {
     font-size: 1.2rem;
-    text-shadow: 0 0 10px rgba(245, 197, 24, 0.8);
+    line-height: 1.5; 
+    margin-bottom: 10px; 
 }
 
 /* 🔹 Ensure modal content is scrollable */
 .modal-content {
-    max-height: 75vh;
+    max-height: 80vh;
     overflow-y: auto;
     padding: 15px;
+    text-align: center;
 }
 
 /* 🔹 Close Button */
