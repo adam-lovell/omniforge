@@ -18,31 +18,31 @@
 /* Gallery Container Styling */
 .gallery {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, auto);
-    gap: 10px;
-    width: 90%;
+    gap: 15px;
+    width: 80%;
     max-width: 1200px;
-    margin: auto;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: -1; /* Puts images in the background */
+    z-index: 5; /* Behind the text box */
 }
 
 /* Individual Gallery Image Styling */
 .gallery img {
-     width: 100%;
-    height: auto;
+    width: 180px; /* Adjust image width */
+    height: 180px; /* Adjust image height */
+    object-fit: cover;
     border-radius: 10px;
-    opacity: 0.8; /* Slight transparency for mystical effect */
+    opacity: 0.8; /* Slight transparency for blending */
     transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 
 /* Interactive Hover Effect */
 .gallery img:hover {
-     transform: scale(1.1);
+    transform: scale(1.1);
     opacity: 1;
 }
 
@@ -68,16 +68,26 @@ body {
     background-blend-mode: overlay;
 }
 
+/* 🔹 Center Everything */
+.layout-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    height: 100vh;
+}
+
 /* 🔹 Cyberpunk Glow Effect */
 .container {
-     position: relative;
-    z-index: 2;
-    background: rgba(15, 15, 25, 0.9); /* Cyberpunk backdrop */
-    border: 1px solid rgba(13, 197, 255, 0.5);
-    box-shadow: 0 0 25px rgba(13, 197, 255, 0.7);
-    padding: 30px;
+   position: relative;
+    z-index: 10; /* Make sure text stays above images */
+    background: rgba(15, 15, 25, 0.95);
+    padding: 20px;
     border-radius: 10px;
-    max-width: 600px;
+    box-shadow: 0 0 30px rgba(245, 197, 24, 0.8);
+    max-width: 500px;
     text-align: center;
 }
 
