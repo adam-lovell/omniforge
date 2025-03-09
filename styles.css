@@ -17,33 +17,33 @@
 
 /* Gallery Container Styling */
 .gallery {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, auto);
     gap: 10px;
-    max-width: 90vw; /* Keeps it responsive */
+    width: 90%;
+    max-width: 1200px;
     margin: auto;
-    padding: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1; /* Puts images in the background */
 }
 
 /* Individual Gallery Image Styling */
 .gallery img {
-    width: 150px; /* Adjust to fit around the text box */
-    height: 180px;
-    object-fit: cover;
-    border-radius: 8px;
-    opacity: 0.7; /* Slight transparency */
-    transition: transform 0.3s ease, opacity 0.3s ease;
-    filter: brightness(0.85); /* Darkens slightly to blend into the dark theme */
+     width: 100%;
+    height: auto;
+    border-radius: 10px;
+    opacity: 0.8; /* Slight transparency for mystical effect */
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 
 /* Interactive Hover Effect */
 .gallery img:hover {
+     transform: scale(1.1);
     opacity: 1;
-    transform: scale(1.08);
-    filter: brightness(1.1);
-    box-shadow: 0 0 20px rgba(13, 197, 255, 0.9);
 }
 
 body {
