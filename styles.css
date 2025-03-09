@@ -17,33 +17,25 @@
 
 /* Gallery Container Styling */
 .gallery {
+    flex: 2 1 600px;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, auto);
-    gap: 15px;
-    width: 80%;
-    max-width: 1200px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 5; /* Behind the text box */
+    grid-template-columns: repeat(3, 1fr); /* Three columns */
+    grid-gap: 15px;
+    justify-items: center;
 }
 
 /* Individual Gallery Image Styling */
 .gallery img {
-    width: 180px; /* Adjust image width */
-    height: 180px; /* Adjust image height */
-    object-fit: cover;
-    border-radius: 10px;
-    opacity: 0.8; /* Slight transparency for blending */
-    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+   width: 100%;
+    height: auto;
+    max-width: 180px; /* Ensure uniform size */
+    max-height: 250px;
 }
-
+    
 /* Interactive Hover Effect */
 .gallery img:hover {
-    transform: scale(1.1);
-    opacity: 1;
+    transform: scale(1.05); /* Slight zoom effect */
+    opacity: 1; /* Full opacity on hover */
 }
 
 body {
@@ -79,16 +71,29 @@ body {
     height: 100vh;
 }
 
+.page-layout {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 30px; /* Adjust spacing */
+    padding: 50px;
+    position: relative;
+}
+
+body {
+    background: radial-gradient(circle at center, rgba(13, 197, 255, 0.15) 10%, transparent 90%), 
+                url('images/your-background-image.jpg'); /* Add a subtle background */
+    background-size: cover;
+    background-blend-mode: overlay;
+}
+
 /* 🔹 Cyberpunk Glow Effect */
 .container {
-   position: relative;
-    z-index: 10; /* Make sure text stays above images */
-    background: rgba(15, 15, 25, 0.95);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 30px rgba(245, 197, 24, 0.8);
-    max-width: 500px;
     text-align: center;
+    max-width: 600px;
+    padding: 20px;
+    margin: auto;
 }
 
 .title {
