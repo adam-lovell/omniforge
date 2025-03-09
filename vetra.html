@@ -462,7 +462,7 @@ async function progressReport() {
         let task = selectedTask.task;
 
         // ✅ Action Prompt (Complete, Postpone, or Cancel)
-        let action = prompt(`\nWHAT SHALL BE DONE?\n1. MARK AS COMPLETED ✅\n2. POSTPONE 🔄\n3. CANCEL ❌\n\nSPEAK A NUMERAL:`).trim();
+        let action = prompt(`\nWHAT SHALL BE DONE?\n1. MARK AS COMPLETED ✅\n2. POSTPONE 🔄\n3. CANCEL ❌`).trim();
 
         if (action === "1") {
             // 🔥 Remove completed task from Firestore
