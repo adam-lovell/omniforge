@@ -68,8 +68,9 @@ body {
 .choices {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 20px; /* Adjust this for more or less space between buttons */
     margin-top: 20px;
+    align-items: stretch; /* Ensures buttons evenly distribute width */
 }
 
 button {
