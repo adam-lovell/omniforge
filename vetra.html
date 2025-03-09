@@ -160,7 +160,6 @@ async function loadTasks() {
         ];        
     } catch (error) {
         console.error("⚠️ ERROR LOADING TASKS:", error);
-        alert("⚠️ FAILED TO RETRIEVE BURDENS. CHECK YOUR CONNECTION, MORTAL.");
         return [{
             "Urgent & Important": [],
             "Not Urgent but Important": [],
@@ -324,7 +323,6 @@ async function viewBurdens() {
 
     } catch (error) {
         console.error("❌ ERROR VIEWING BURDENS:", error);
-        alert("⚠️ FAILED TO RETRIEVE BURDENS. CHECK YOUR CONNECTION, MORTAL.");
     }
 }
 
