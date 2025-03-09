@@ -20,27 +20,30 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 15px; /* spaces images out evenly */
-    margin-top: 30px;
+    align-items: center;
+    gap: 10px;
+    max-width: 90vw; /* Keeps it responsive */
+    margin: auto;
     padding: 20px;
 }
 
 /* Individual Gallery Image Styling */
 .gallery img {
-    width: 180px; /* Consistent sizing */
-    height: 240px; /* uniform height for neat alignment */
-    object-fit: cover; /* maintains aspect ratio, cropping excess */
-    border-radius: 8px; /* Slightly rounded corners for a clean look */
-    box-shadow: 0 0 12px rgba(13, 197, 255, 0.6); /* Cyberpunk glowing effect */
-    opacity: 0.7; /* Slight transparency for mystical feel */
-    transition: all 0.3s ease-in-out; /* Smooth transition on hover */
+    width: 150px; /* Adjust to fit around the text box */
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+    opacity: 0.7; /* Slight transparency */
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    filter: brightness(0.85); /* Darkens slightly to blend into the dark theme */
 }
 
 /* Interactive Hover Effect */
 .gallery img:hover {
-    transform: scale(1.08); /* Slight zoom on hover */
-    opacity: 1; /* Fully opaque when hovered */
-    box-shadow: 0 0 25px rgba(13, 197, 255, 1); /* Enhanced glow on hover */
+    opacity: 1;
+    transform: scale(1.08);
+    filter: brightness(1.1);
+    box-shadow: 0 0 20px rgba(13, 197, 255, 0.9);
 }
 
 body {
@@ -67,13 +70,15 @@ body {
 
 /* 🔹 Cyberpunk Glow Effect */
 .container {
-    max-width: 700px;
-    padding: 20px;
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(13, 197, 255, 0.3);
-    box-shadow: 0 0 15px rgba(13, 197, 255, 0.5);
+     position: relative;
+    z-index: 2;
+    background: rgba(15, 15, 25, 0.9); /* Cyberpunk backdrop */
+    border: 1px solid rgba(13, 197, 255, 0.5);
+    box-shadow: 0 0 25px rgba(13, 197, 255, 0.7);
+    padding: 30px;
     border-radius: 10px;
-    background: rgba(15, 15, 25, 0.8);
+    max-width: 600px;
+    text-align: center;
 }
 
 .title {
