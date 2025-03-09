@@ -71,12 +71,13 @@ body {
     gap: 20px; /* Adjust this for more or less space between buttons */
     margin-top: 20px;
     align-items: stretch; /* Ensures buttons evenly distribute width */
+    margin-top: 20px;
 }
 
 button {
     background: linear-gradient(45deg, #0DC5FF, #003366); /* Blue gradient */
-    color: black;
-    padding: 10px 20px;
+    color: #fff;
+    padding: 15px 20px;
     font-size: 1rem;
     font-weight: bold;
     border: none;
@@ -87,12 +88,13 @@ button {
     border-radius: 6px;
     box-shadow: 0px 4px 15px rgba(13, 197, 255, 0.8);
     text-transform: uppercase;
+    width: 100%; /* ensures all buttons are equal width */
 }
 
 button:hover {
     background: linear-gradient(45deg, #003366, #0DC5FF);
-    transform: scale(1.08);
-    box-shadow: 0 0 30px rgba(13, 197, 255, 1);
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(13, 197, 255, 1);
 }
 
 /* 🔹 Hide elements */
