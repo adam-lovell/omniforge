@@ -51,12 +51,13 @@
 </div>
 
 <script> // BEGIN SCRIPT 1 - UI Logic & Event Listeners
+    
     // MAIN UI FUNCTION
     async function main() {
         let [tasks, dailyTasks] = await loadTasks(); 
         const vetraText = document.getElementById("vetra-text");
         if (vetraText) {
-            vetraText.textContent = menuOptions;
+            vetraText.textContent = "State your burdens.";
         } else {
             console.warn("⚠️ Missing #vetra-text element in HTML.");
         }
@@ -83,32 +84,59 @@
     }
 
     // UI EVENT LISTENERS
-    document.addEventListener("DOMContentLoaded", () => {
-    
-        const vetraBtn = document.getElementById("vetra-start-btn");
-        const modal = document.getElementById("vetra-modal");
-        const closeModal = document.getElementById("close-modal");
-        const modalText = document.getElementById("vetra-text");
-    
-        if (!vetraBtn || !modal || !closeModal) {
-            console.error("⚠️ Button or Modal not found! Check HTML.");
-            return;
-        }
-    
-        vetraBtn.addEventListener("click", () => {
-            main();
-            modal.classList.add("active");
-        });
-    
-        closeModal.addEventListener("click", () => {
-            modal.classList.remove("active");
-        });
+    const vetraBtn = document.getElementById("vetra-start-btn");
+    const modal = document.getElementById("vetra-modal");
+    const closeModal = document.getElementById("close-modal");
 
-    // ADD BURDEN BUTTONS
-    document.getElementById("add-burden-btn").addEventListener("click", addBurdens);
-    document.getElementById("shed-burdens-btn").addEventListener("click", shedBurdens);
-    document.getElementById("progress-report-btn").addEventListener("click", progressReport);
-    document.getElementById("save-exit-btn").addEventListener("click", saveTasks);
+    const addBurdenBtn = document.getElementById("add-burden-btn");
+    const viewBurdensBtn = document.getElementById("view-burdens-btn");
+    const shedBurdensBtn = document.getElementById("shed-burdens-btn");
+    const progressReportBtn = document.getElementById("progress-report-btn");
+    const saveExitBtn = document.getElementById("save-exit-btn");
+
+    if (!vetraBtn || !modal || !closeModal) {
+        console.error("⚠️ ERROR: Missing Vetra UI Elements");
+        return;
+    }
+
+    // Open Modal
+    vetraBtn.addEventListener("click", () => {
+        console.log("🔥 Vetra Activated!");
+        main();
+        modal.classList.add("active");
+    });
+
+    // Close Modal
+    closeModal.addEventListener("click", () => {
+        console.log("❌ Modal Closed");
+        modal.classList.remove("active");
+    });
+
+    // Attach event listeners to buttons
+    if (addBurdenBtn) addBurdenBtn.addEventListener("click", () => {
+        console.log("📌 Add Burden Clicked!");
+        addBurdens();
+    });
+
+    if (viewBurdensBtn) viewBurdensBtn.addEventListener("click", () => {
+        console.log("📜 Viewing Burdens");
+        viewBurdens();
+    });
+
+    if (shedBurdensBtn) shedBurdensBtn.addEventListener("click", () => {
+        console.log("🔥 Shedding Burden!");
+        shedBurdens();
+    });
+
+    if (progressReportBtn) progressReportBtn.addEventListener("click", () => {
+        console.log("📊 Checking Progress");
+        progressReport();
+    });
+
+    if (saveExitBtn) saveExitBtn.addEventListener("click", () => {
+        console.log("💾 Saving Tasks");
+        saveTasks();
+    });
 });
 </script> 
     
