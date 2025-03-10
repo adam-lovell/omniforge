@@ -8,11 +8,21 @@
     height: auto;
     z-index: 1000; /* Ensures it stays above everything */
     filter: drop-shadow(0 0 10px rgba(13, 197, 255, 0.8)); /* Glowing effect */
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
+    animation: pulse 2s infinite alternate;
+}
+
+@keyframes pulse {
+    from {
+        filter: drop-shadow(0 0 10px rgba(13, 197, 255, 0.6));
+    }
+    to {
+        filter: drop-shadow(0 0 20px rgba(13, 197, 255, 1));
+    }
 }
 
 #omniforge-logo:hover {
-    transform: scale(1.1);
+    transform: scale(1.1) rotate(2deg);
 }
 
 /* Gallery Container Styling */
@@ -39,7 +49,10 @@
 }
 
 body {
-    background: #3178E3; /* Restores the dark blue-gray background */
+    background: radial-gradient(circle at center, rgba(13, 197, 255, 0.2) 10%, rgba(0, 0, 0, 0.9) 90%), 
+                url('images/cyber-grid.png'); /* Cyber-style grid */
+    background-size: cover;
+    background-blend-mode: overlay;
     color: #F9CC29; /* Gold text */
     font-family: 'Cinzel', serif;
     text-align: center;
@@ -50,6 +63,7 @@ body {
     justify-content: center;
     height: 100vh;
 }
+
 
     /* 🔹 Cyber Tech Background */
     background-image: 
