@@ -29,9 +29,10 @@
 .gallery {
     flex: 2 1 600px;
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Three columns */
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     grid-gap: 15px;
-    justify-items: center;
+    justify-content: center;
+    padding: 30px;
 }
 
 /* Individual Gallery Image Styling */
@@ -40,11 +41,14 @@
     height: auto;
     max-width: 180px; /* Ensure uniform size */
     max-height: 250px;
+    border-radius: 8px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
     
 /* Interactive Hover Effect */
 .gallery img:hover {
     transform: scale(1.05); /* Slight zoom effect */
+    box-shadow: 0 0 20px rgba(13, 197, 255, 0.6);
     opacity: 1; /* Full opacity on hover */
 }
 
@@ -155,8 +159,13 @@ button {
 
 button:hover {
     background: linear-gradient(45deg, #003366, #0DC5FF);
-    transform: scale(1.05);
+    transform: scale(1.02);
     box-shadow: 0 0 25px rgba(13, 197, 255, 1);
+}
+
+button:active {
+    transform: scale(0.95);
+    box-shadow: 0 0 15px rgba(13, 197, 255, 0.9);
 }
 
 /* 🔹 Hide elements */
