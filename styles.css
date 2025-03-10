@@ -39,10 +39,16 @@
 }
 
 body {
-    background: #0D1117; /* Restores the dark blue-gray background */
-    color: #F5C518; /* Gold text */
+    background: #3178E3; /* Restores the dark blue-gray background */
+    color: #F9CC29; /* Gold text */
     font-family: 'Cinzel', serif;
     text-align: center;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
 }
 
     /* 🔹 Cyber Tech Background */
