@@ -110,16 +110,24 @@
     import { getFirestore, collection, doc, getDoc, setDoc, addDoc, getDocs, deleteDoc, query, where } 
         from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
 
+    // Firebase config (replace with your actual values)
+    export const firebaseConfig = {
+        apiKey: "AIzaSyCfanKgFO98R1uKPpEAUUFOW1U66knL8Zs",
+        authDomain: "hellforge-13d88.firebaseapp.com",
+        projectId: "hellforge-13d88",
+        storageBucket: "hellforge-13d88.firebasestorage.app",
+        messagingSenderId: "453743116508",
+        appId: "1:453743116508:web:8beaee82ff6b78a2167419",
+        measurementId: "G-WRCFGP7F79"
+    };
+
     // Import Firebase Config from External File
     import { firebaseConfig } from './firebase-config.js';
 
-    // Initialize Firebase App
+    // Initialize Firebase App & Firestore
     const app = initializeApp(firebaseConfig);
-
-    // Initialize Firestore Database
-    const db = getFirestore(app);    
+    export const db = getFirestore(app);    
     
-    console.log("Firebase Initiliazed Successfully!");
 </script>
 
 <script> // BEGIN SCRIPT 3 - Task & Burden Logic
