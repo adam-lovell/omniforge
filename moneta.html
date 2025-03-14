@@ -18,7 +18,7 @@
     <div id="moneta-modal" class="modal">
         <div class="modal-content">
             <p id="error-message" style="color: red;"></p> 
-            <button id="close-modal">CANCEL</button>
+            <button id="close-modal">BACK</button>
             <p>I AM MONETA, ORACLE OF KNOWLEDGE.<br>STATE YOUR LEARNING OBJECTIVES</p>
             <p id="moneta-text"></p>
 
@@ -31,10 +31,9 @@
             <input type="text" id="learning-topic" placeholder="Learning Topic">
             <select id="learning-category">
                 <option value="Technical">Technical</option>
-                <option value="Theoretical">Theoretical</option>
-                <option value="Creative">Creative</option>
-                <option value="Language">Language</option>
-                <option value="Physical">Physical</option>
+                <option value="Theoretical">Memory</option>
+                <option value="Creative">Reading</option>
+                <option value="Language">Practice</option>
             </select>
             <input type="date" id="learning-deadline">
             <button id="add-learning-btn">Declare Learning Objective</button>
@@ -44,7 +43,7 @@
 
             <button onclick="viewObjectives()">View Objectives</button>
             <button onclick="markObjectiveComplete()">Mark as Completed</button>
-            <button onclick="saveAndExit()">Save and Exit</button>
+            <button onclick="saveAndExit()">Save</button>
         </div>
     </div>
 
