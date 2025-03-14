@@ -295,3 +295,75 @@ body.modal-open {
     gap: 25px; /* More spacing between each button */
 }
 
+/* 🔹 Ensure even form spacing & alignment */
+.auth-section {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 25px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 450px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 15px rgba(13, 197, 255, 0.6);
+}
+
+/* 🔹 Style input fields */
+input[type="email"], 
+input[type="password"], 
+input[type="text"], 
+input[type="tel"] {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.2rem;
+    border: 2px solid rgba(255, 215, 0, 0.8);
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.6);
+    color: #FFD700;
+    margin-bottom: 10px;
+    transition: 0.3s ease-in-out;
+}
+
+/* 🔹 Input focus effect */
+input:focus {
+    outline: none;
+    border-color: #0DC5FF;
+    box-shadow: 0 0 15px rgba(13, 197, 255, 0.8);
+}
+
+/* 🔹 Style buttons */
+.auth-button {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    background: gold;
+    color: black;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(13, 197, 255, 0.8);
+    transition: 0.3s ease-in-out;
+    text-transform: uppercase;
+}
+
+.auth-button:hover {
+    background: #FFD700;
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 1);
+}
+
+/* 🔹 Ensure responsive design */
+@media screen and (max-width: 600px) {
+    .auth-section {
+        width: 95%;
+    }
+}
+
+
+
+
+
+
+
+
+
+
