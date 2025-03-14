@@ -107,7 +107,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // Open Modal
     vetraBtn.addEventListener("click", () => {
         console.log("🔥 Vetra Activated!");
-        main();
         modal.classList.add("active");
     });
 
@@ -142,7 +141,8 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("💾 Saving Tasks");
         saveTasks();
     });
-}
+});
+
 </script> 
     
 <script type="module"> // BEGIN SCRIPT 2 - Firebase Configuration & Initialization
