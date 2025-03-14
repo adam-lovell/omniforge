@@ -123,6 +123,13 @@ body {
     text-shadow: 0 0 15px #0DC5FF, 0 0 30px rgba(13, 197, 255, 0.8);
 }
 
+input[type="text"], input[type="date"], input[type="time"], select {
+    padding: 14px; /* Slightly bigger */
+    font-size: 1.1rem;
+    width: 95%; /* Expands slightly */
+    max-width: 500px; /* Prevents it from getting too wide */
+}
+
 @keyframes glow-pulse {
     from {
         text-shadow: 0 0 10px #0DC5FF, 0 0 25px rgba(13, 197, 255, 1);
@@ -149,6 +156,29 @@ body {
     margin-top: 20px;
     align-items: stretch; /* Ensures buttons evenly distribute width */
     margin-top: 20px;
+}
+
+.back-button {
+    background: linear-gradient(45deg, #003366, #0DC5FF); /* Dark to light blue */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 6px;
+    box-shadow: 0px 4px 10px rgba(13, 197, 255, 0.8);
+    text-transform: uppercase;
+}
+
+.back-button:hover {
+    background: linear-gradient(45deg, #0DC5FF, #003366);
+    transform: scale(1.05);
+}
+
+.back-button:active {
+    transform: scale(0.95);
+    box-shadow: 0 0 15px rgba(13, 197, 255, 0.9);
 }
 
 button {
