@@ -117,13 +117,10 @@ body {
 }
 
 .title {
-    font-size: 3.5rem;
+    font-size: 2.5rem; /* Reduce size slightly */
     text-transform: uppercase;
-    font-weight: bold;
-    letter-spacing: 7px;
-    color: #F9CC29; /* OmniForge Gold */
-    text-shadow: 0 0 10px #0DC5FF, 0 0 25px rgba(13, 197, 255, 1), 0 0 50px rgba(13, 197, 255, 0.8);
-    animation: glow-pulse 2s infinite alternate;
+    letter-spacing: 3px;
+    text-shadow: 0 0 15px #0DC5FF, 0 0 30px rgba(13, 197, 255, 0.8);
 }
 
 @keyframes glow-pulse {
