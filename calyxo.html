@@ -30,16 +30,16 @@
 
             <input type="text" id="food-name" placeholder="Food Name">
             <input type="number" id="calories" placeholder="Calories">
-            <button id="add-calories-btn">Submit Offering</button>
+            <button id="add-calories-btn">SUBMIT</button>
 
             <h3>YOUR CONSUMPTION RECORDS:</h3>
             <div id="food-log"></div>
 
             <h3>Total Calories: <span id="total-calories">0</span> CAL</h3>
 
-            <button onclick="viewCalories()">View Data</button>
-            <button onclick="shedCalories()">Remove Data</button>
-            <button onclick="saveAndExit()">Save</button>
+            <button onclick="viewCalories()">VIEW DATA</button>
+            <button onclick="shedCalories()">REMOVE DATA</button>
+            <button onclick="saveAndExit()">SAVE</button>
         </div>
     </div>
 
@@ -72,7 +72,7 @@
             const calories = parseInt(document.getElementById("calories").value);
 
             if (!foodName || isNaN(calories) || calories <= 0) {
-                errorMessage.textContent = "⚠️ INVALID OFFERING. TRY AGAIN, MORTAL.";
+                errorMessage.textContent = "⚠️ INVALID OFFERING. TRY AGAIN.";
                 return;
             }
 
@@ -94,13 +94,13 @@
 
     function viewCalories() {
         if (foodLog.length === 0) {
-            alert("⚠️ NO ENTRIES FOUND. HAVE YOU EVEN EATEN, MORTAL?");
+            alert("⚠️ NO ENTRIES FOUND. HAVE YOU EVEN EATEN?");
             return;
         }
 
         let message = "📜 **YOUR CONSUMPTION RECORD:**\n";
         foodLog.forEach((entry, index) => {
-            message += `${index + 1}. 🍽️ ${entry.foodName}: ${entry.calories} kcal\n`;
+            message += `${index + 1}. 🍽️ ${entry.foodName}: ${entry.calories} Cal\n`;
         });
 
         alert(message);
@@ -108,7 +108,7 @@
 
     function shedCalories() {
         if (foodLog.length === 0) {
-            alert("⚠️ YOU HAVE NO BURDENS TO SHED.");
+            alert("⚠️ YOU HAVE NO FOOD TO REMOVE.");
             return;
         }
 
@@ -126,7 +126,7 @@
         document.getElementById("total-calories").textContent = totalCalories;
         document.getElementById("food-log").children[index].remove();
 
-        alert("✅ BURDEN LIFTED.");
+        alert("✅ REMOVED.");
     }
 
     function saveAndExit() {
