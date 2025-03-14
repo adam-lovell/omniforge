@@ -84,9 +84,9 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    position: relative;
     width: 100%;
     height: 100vh;
+    backdrop-filter: blur(5px); /* Adds a slight blur effect */
 }
 
 .page-layout {
@@ -101,9 +101,11 @@ body {
 
 body {
     background: radial-gradient(circle at center, rgba(13, 197, 255, 0.15) 10%, transparent 90%), 
-                url('images/your-background-image.jpg'); /* Add a subtle background */
-    background-size: cover;
-    background-blend-mode: overlay;
+                url('images/cyber-tech-pattern.jpg'), /* Replace with a proper cyber texture */
+                linear-gradient(to bottom, #000000 10%, #0A1F33 50%, #0DC5FF 90%); 
+    background-size: cover, 100%, 100%;
+    background-attachment: fixed;
+    background-blend-mode: multiply;
 }
 
 /* 🔹 Cyberpunk Glow Effect */
@@ -115,10 +117,22 @@ body {
 }
 
 .title {
-    font-size: 3rem;
+    font-size: 3.5rem;
     text-transform: uppercase;
-    letter-spacing: 5px;
-    text-shadow: 0 0 20px #0DC5FF, 0 0 40px rgba(13, 197, 255, 0.8); /* Electric Blue Glow */
+    font-weight: bold;
+    letter-spacing: 7px;
+    color: #F9CC29; /* OmniForge Gold */
+    text-shadow: 0 0 10px #0DC5FF, 0 0 25px rgba(13, 197, 255, 1), 0 0 50px rgba(13, 197, 255, 0.8);
+    animation: glow-pulse 2s infinite alternate;
+}
+
+@keyframes glow-pulse {
+    from {
+        text-shadow: 0 0 10px #0DC5FF, 0 0 25px rgba(13, 197, 255, 1);
+    }
+    to {
+        text-shadow: 0 0 20px #0DC5FF, 0 0 50px rgba(13, 197, 255, 1), 0 0 75px rgba(13, 197, 255, 0.8);
+    }
 }
 
 /* 🔹 Enhanced Logo Effect */
@@ -141,26 +155,15 @@ body {
 }
 
 button {
-    background: linear-gradient(45deg, #0DC5FF, #003366); /* Blue gradient */
-    color: #fff;
-    padding: 15px 20px;
-    font-size: 1rem;
-    font-weight: bold;
-    border: none;
-    cursor: pointer;
-    transition: 0.3s ease-in-out;
-    font-family: 'Cinzel', serif;
-    letter-spacing: 2px;
-    border-radius: 6px;
-    box-shadow: 0px 4px 15px rgba(13, 197, 255, 0.8);
-    text-transform: uppercase;
-    width: 100%; /* ensures all buttons are equal width */
+    background: linear-gradient(45deg, #F9CC29, #0D1F2D); /* Gold to Dark Blue */
+    color: #000;
+    border: 2px solid #F9CC29;
+    box-shadow: 0px 4px 15px rgba(249, 204, 41, 0.8);
 }
 
 button:hover {
-    background: linear-gradient(45deg, #003366, #0DC5FF);
-    transform: scale(1.02);
-    box-shadow: 0 0 25px rgba(13, 197, 255, 1);
+    background: linear-gradient(45deg, #0D1F2D, #F9CC29);
+    box-shadow: 0 0 25px rgba(249, 204, 41, 1);
 }
 
 button:active {
