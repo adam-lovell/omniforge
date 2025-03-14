@@ -75,7 +75,7 @@
             const deadline = document.getElementById("learning-deadline").value;
 
             if (!topic || !category || !deadline) {
-                errorMessage.textContent = "⚠️ INSUFFICIENT DATA. REFINE YOUR INTENT, MORTAL.";
+                errorMessage.textContent = "⚠️ INSUFFICIENT DATA. REFINE YOUR INTENT.";
                 return;
             }
 
@@ -95,7 +95,7 @@
 
     function viewObjectives() {
         if (learningObjectives.length === 0) {
-            alert("⚠️ NO LEARNING OBJECTIVES FOUND. HAVE YOU SET A COURSE, MORTAL?");
+            alert("⚠️ NO LEARNING OBJECTIVES FOUND. HAVE YOU SET A COURSE?");
             return;
         }
 
