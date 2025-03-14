@@ -155,15 +155,26 @@ body {
 }
 
 button {
-    background: linear-gradient(45deg, #F9CC29, #0D1F2D); /* Gold to Dark Blue */
-    color: #000;
-    border: 2px solid #F9CC29;
-    box-shadow: 0px 4px 15px rgba(249, 204, 41, 0.8);
+    background: gold; /* Full gold button */
+    color: black; /* High-contrast text */
+    padding: 18px 25px; /* Bigger buttons */
+    font-size: 1.2rem; /* Bigger text */
+    font-weight: bold;
+    border: 2px solid black; /* Clean border */
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 2px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 15px rgba(13, 197, 255, 0.8);
+    text-transform: uppercase;
+    width: 100%;
 }
 
 button:hover {
-    background: linear-gradient(45deg, #0D1F2D, #F9CC29);
-    box-shadow: 0 0 25px rgba(249, 204, 41, 1);
+    background: #FFD700; /* Brighter gold */
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(255, 215, 0, 1);
 }
 
 button:active {
