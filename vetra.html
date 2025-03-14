@@ -94,6 +94,11 @@
     const progressReportBtn = document.getElementById("progress-report-btn");
     const saveExitBtn = document.getElementById("save-exit-btn");
 
+document.addEventListener("DOMContentLoaded", () => {
+    const vetraBtn = document.getElementById("vetra-start-btn");
+    const modal = document.getElementById("vetra-modal");
+    const closeModal = document.getElementById("close-modal");
+
     if (!vetraBtn || !modal || !closeModal) {
         console.error("⚠️ ERROR: Missing Vetra UI Elements");
         return;
@@ -137,7 +142,7 @@
         console.log("💾 Saving Tasks");
         saveTasks();
     });
-});
+}
 </script> 
     
 <script type="module"> // BEGIN SCRIPT 2 - Firebase Configuration & Initialization
