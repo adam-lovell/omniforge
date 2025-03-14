@@ -128,9 +128,9 @@ body {
 
 input[type="text"], input[type="date"], input[type="time"], select {
     padding: 8px; /* Slightly bigger */
-    font-size: 1.1rem;
-    width: 95%; /* Expands slightly */
-    max-width: 500px; /* Prevents it from getting too wide */
+    font-size: 1rem;
+    width: 80%; /* Expands slightly */
+    max-width: 320px; /* Prevents it from getting too wide */
 }
 
 @keyframes glow-pulse {
