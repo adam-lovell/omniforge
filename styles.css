@@ -111,6 +111,7 @@ body {
 /* 🔹 Cyberpunk Glow Effect */
 .container {
     text-align: center;
+    min-height: 90vh;
     max-width: 800px; /* Gives it more space */
     padding: 30px;
     margin: auto;
