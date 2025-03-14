@@ -111,9 +111,12 @@ body {
 /* 🔹 Cyberpunk Glow Effect */
 .container {
     text-align: center;
-    max-width: 600px;
-    padding: 20px;
+    max-width: 800px; /* Gives it more space */
+    padding: 30px;
     margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .title {
