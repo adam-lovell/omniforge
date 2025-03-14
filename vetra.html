@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VETRA - DAUGHTER OF THE INQUISITOR</title>
-    <link rel="stylesheetz so" href="styles.css">
+    <link rel="stylesheetz" href="styles.css">
 </head>
+<div class="vetra-container">
 <body>
     <a href="index.html">
         <img src="images/omniforge_logo.jpg" alt="OmniForge Logo" id="omniforge-logo">
@@ -18,8 +19,8 @@
 <div id="vetra-modal" class="modal">
   <div class="modal-content">
     <p id="error-message" style="color: red;"></p> 
-    <button id="close-modal">CANCEL</button>
-    <p>I AM VETRA, DAUGHTER OF THE INQUISITOR.<br>STATE YOUR BURDENS.</p>
+    <button id="close-modal">BACK</button>
+    <p>I AM VETRA, DAUGHTER OF THE INQUISITOR.<br>LIST YOUR BURDENS</p>
     <p id="vetra-text"></p>
 
 
@@ -45,7 +46,7 @@
     <button onclick="viewBurdens()">View Burdens</button>
     <button onclick="shedBurdens()">Shed Burdens</button>
     <button onclick="progressReport()">Progress Report</button>
-    <button onclick="saveAndExit()">Save and Exit</button>
+    <button onclick="saveAndExit()">Save</button>
   </div>
 </div>
 
@@ -236,10 +237,10 @@ async function saveTasks(tasks = null, dailyTasks = null) {
             timestamp: new Date().toISOString()  // ✅ Ensures proper timestamp format
         }, { merge: true });
 
-        alert("✅ BURDENS LOCKED, UNTIL WE MEET AGAIN, MORTAL.");
+        alert("✅ BURDENS LOCKED, UNTIL WE MEET AGAIN.");
     } catch (error) {
         console.error("⚠️ ERROR SAVING TASKS:", error);
-        alert("⚠️ FAILED TO LOCK BURDENS. TRY AGAIN, MORTAL.");
+        alert("⚠️ FAILED TO LOCK BURDENS. TRY AGAIN.");
     }
 }
 
@@ -268,7 +269,7 @@ async function addBurdens() {
 
         // ✅ Validate User Input
         if (!description || !category || !date || !time || !duration) {
-            errorMessage.textContent = "⚠️ REFRAME, MORTAL! COMPLETE ALL FIELDS.";
+            errorMessage.textContent = "⚠️ COMPLETE ALL FIELDS!";
             return;
         }
 
@@ -449,7 +450,7 @@ async function shedBurdens() {
 
     } catch (error) {
         console.error("❌ ERROR SHEDDING BURDEN:", error);
-        alert("⚠️ FAILED TO REMOVE BURDEN. TRY AGAIN, MORTAL.");
+        alert("⚠️ FAILED TO REMOVE BURDEN. TRY AGAIN.");
     }
 }
 
@@ -541,9 +542,10 @@ async function progressReport() {
 
     } catch (error) {
         console.error("❌ ERROR IN PROGRESS REPORT:", error);
-        alert("⚠️ FAILED TO UPDATE BURDEN. TRY AGAIN, MORTAL.");
+        alert("⚠️ FAILED TO UPDATE BURDEN. TRY AGAIN!.");
     }
 }
 </script>
 </body>
+</div>
 </html>
