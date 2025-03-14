@@ -127,7 +127,7 @@ body {
 }
 
 input[type="text"], input[type="date"], input[type="time"], select {
-    padding: 14px; /* Slightly bigger */
+    padding: 8px; /* Slightly bigger */
     font-size: 1.1rem;
     width: 95%; /* Expands slightly */
     max-width: 500px; /* Prevents it from getting too wide */
