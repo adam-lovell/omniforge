@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VETRA - DAUGHTER OF THE INQUISITOR</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="vetra-container">
+    <a href="index.html">
+        <img src="images/omniforge_logo.jpg" alt="OmniForge Logo" id="omniforge-logo">
+    </a>
+    <div class="container">
+        <h1 class="title">ORGANIZE YOUR TASKS</h1>
+        <button id="vetra-start-btn">ENTER DOMAIN</button>
+    </div>
+    
+<div id="vetra-modal" class="modal">
+  <div class="modal-content">
+    <p id="error-message" style="color: red;"></p> 
+    <button id="close-modal">BACK</button>
+    <p>VETRA, DAUGHTER OF THE INQUISITOR.<br>LIST YOUR BURDENS</p>
+    <p id="vetra-text"></p>
+
+
+    <div id="burden-list"></div>
+
+    <input type="text" id="task-description" placeholder="Enter task description">
+    <select id="task-category">
+        <option value="" disabled selected>Select Category</option>
+        <option value="Urgent & Important">Urgent & Important</option>
+        <option value="Not Urgent but Important">Not Urgent but Important</option>
+        <option value="Urgent but Not Important">Urgent but Not Important</option>
+        <option value="Not Urgent & Not Important">Not Urgent & Not Important</option>
+    </select>
+    <input type="date" id="task-date">
+    <input type="time" id="task-time">
+    <input type="text" id="task-duration" placeholder="e.g., 2h 30m">
+
+    <button id="add-burden-btn">Add Burden</button>
+
+    <h3>Your Burdens:</h3>
+    <div id="task-list"></div>
+
+    <button onclick="viewBurdens()">View Burdens</button>
+    <button onclick="shedBurdens()">Shed Burdens</button>
+    <button onclick="progressReport()">Progress Report</button>
+    <button onclick="saveAndExit()">Save</button>
+  </div>
+</div>
+
+<script> // BEGIN SCRIPT 1 - UI Logic & Event Listeners
+    
+    // MAIN UI FUNCTION
+    async function main() {
+        let [tasks, dailyTasks] = await loadTasks(); 
+        const vetraText = document.getElementById("vetra-text");
+        if (vetraText) {
+            vetraText.textContent = "State your burdens.";
+        } else {
+            console.warn("⚠️ Missing #vetra-text element in HTML.");
+        }
+    }
+    
+    // HELPER FUNCTION 1 - Converts to 24-Hour Format
+    function convertTo24h(timeStr) {
+        if (!timeStr) return 0; 
+        const [time, modifier] = timeStr.split(' ');
+        let [hours, minutes] = time.split(':').map(Number);
+        if (modifier.toUpperCase() === 'PM' && hours < 12) hours += 12;
+        if (modifier.toUpperCase() === 'AM' && hours === 12) hours = 0;
+        return hours * 60 + minutes;
+    }
+
+    // HELPER FUNCTION 2 - Converts to Minutes 
+    function convertDurationToMinutes(durationStr) {
+        if (!durationStr) return 0;
+        let total = 0;
+        const parts = durationStr.match(/(\d+h)?\s?(\d+m)?/);
+        if (parts[1]) total += parseInt(parts[1]) * 60;
+        if (parts[2]) total += parseInt(parts[2]);
+        return total;
+    }
+
+    // UI EVENT LISTENERS
+    const vetraBtn = document.getElementById("vetra-start-btn");
+    const modal = document.getElementById("vetra-modal");
+    const closeModal = document.getElementById("close-modal");
+
+    const addBurdenBtn = document.getElementById("add-burden-btn");
+    const viewBurdensBtn = document.getElementById("view-burdens-btn");
+    const shedBurdensBtn = document.getElementById("shed-burdens-btn");
+    const progressReportBtn = document.getElementById("progress-report-btn");
+    const saveExitBtn = document.getElementById("save-exit-btn");
+
+document.addEventListener("DOMContentLoaded", () => {
+    const vetraBtn = document.getElementById("vetra-start-btn");
+    const modal = document.getElementById("vetra-modal");
+    const closeModal = document.getElementById("close-modal");
+
+    if (!vetraBtn || !modal || !closeModal) {
+        console.error("⚠️ ERROR: Missing Vetra UI Elements");
+        return;
+    }
+
+    // Open Modal
+    vetraBtn.addEventListener("click", () => {
+        console.log("🔥 Vetra Activated!");
+        modal.classList.add("active");
+    });
+
+    // Close Modal
+    closeModal.addEventListener("click", () => {
+        console.log("❌ Modal Closed");
+        modal.classList.remove("active");
+    });
+
+    // Attach event listeners to buttons
+    if (addBurdenBtn) addBurdenBtn.addEventListener("click", () => {
+        console.log("📌 Add Burden Clicked!");
+        addBurdens();
+    });
+
+    if (viewBurdensBtn) viewBurdensBtn.addEventListener("click", () => {
+        console.log("📜 Viewing Burdens");
+        viewBurdens();
+    });
+
+    if (shedBurdensBtn) shedBurdensBtn.addEventListener("click", () => {
+        console.log("🔥 Shedding Burden!");
+        shedBurdens();
+    });
+
+    if (progressReportBtn) progressReportBtn.addEventListener("click", () => {
+        console.log("📊 Checking Progress");
+        progressReport();
+    });
+
+    if (saveExitBtn) saveExitBtn.addEventListener("click", () => {
+        console.log("💾 Saving Tasks");
+        saveTasks();
+    });
+});
+
+</script> 
+    
+<script type="module"> // BEGIN SCRIPT 2 - Firebase Configuration & Initialization
+    
+    // Import Firebase Modules
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+    import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+    
+    // Firebase config (replace with your actual values)
+    export const firebaseConfig = {
+        apiKey: "AIzaSyCfanKgFO98R1uKPpEAUUFOW1U66knL8Zs",
+        authDomain: "hellforge-13d88.firebaseapp.com",
+        projectId: "hellforge-13d88",
+        storageBucket: "hellforge-13d88.firebasestorage.app",
+        messagingSenderId: "453743116508",
+        appId: "1:453743116508:web:8beaee82ff6b78a2167419",
+        measurementId: "G-WRCFGP7F79"
+    };
+
+    // Initialize Firebase App & Firestore
+    const app = initializeApp(firebaseConfig);
+    export const db = getFirestore(app);    
+
+    console.log("🔥 Firebase Initialized Successfully!");
+    
+</script>
+
+<script type="module" src="js/vetra.js"></script>
+
+</div>
+</body>
+</html>
