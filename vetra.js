@@ -70,8 +70,6 @@ async function saveTasks(tasks = null, dailyTasks = null) {
     }
 }
 
-
-    
 // ADD BURDENS FUNCTION
 async function addBurdens() {
     try {
