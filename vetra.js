@@ -4,7 +4,7 @@ console.log("✅ Firestore DB:", db);
 console.log("✅ Firestore imported successfully into vetra.js");
 
 // LOAD TASKS FUNCTION
-async function loadTasks() {
+export async function loadTasks() {
     try {
         if (!db) {
             throw new Error("⚠️ Firestore is not initialized.");
@@ -48,7 +48,7 @@ async function loadTasks() {
 }
 
 // SAVE TASKS FUNCTION
-async function saveTasks(tasks = null, dailyTasks = null) {
+export async function saveTasks(tasks = null, dailyTasks = null) {
     try {
         if (!db) {
             throw new Error("⚠️ Firestore is not initialized.");
@@ -76,7 +76,7 @@ async function saveTasks(tasks = null, dailyTasks = null) {
 }
 
 // ADD BURDENS FUNCTION
-async function addBurdens() {
+export async function addBurdens() {
     try {
         if (!db) {
             throw new Error("⚠️ Firestore is not initialized.");
@@ -148,7 +148,7 @@ async function addBurdens() {
 }
 
 // VIEW BURDENS FUNCTION
-async function viewBurdens() {
+export async function viewBurdens() {
     try {
         // ✅ Ensure Firestore is initialized
         if (!db) {
@@ -203,7 +203,7 @@ async function viewBurdens() {
 }
 
 // SHED BURDENS FUNCTION
-async function shedBurdens() {
+export async function shedBurdens() {
     try {
         // ✅ Ensure Firestore is initialized
         if (!db) {
@@ -284,7 +284,7 @@ async function shedBurdens() {
 }
 
 // PROGRESS REPORT FUNCTION
-async function progressReport() {
+export async function progressReport() {
     try {
         // ✅ Ensure Firestore is initialized
         if (!db) {
