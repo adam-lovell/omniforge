@@ -1,6 +1,6 @@
 // ✅ Import Firestore instance from firebaseConfig.js
 import { db } from '../firebaseConfig.js';  // Adjust path if needed
-
+console.log("✅ Firestore DB:", db);
 console.log("✅ Firestore imported successfully into vetra.js");
 
 // LOAD TASKS FUNCTION
