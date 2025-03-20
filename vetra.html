@@ -147,33 +147,10 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 </script> 
-    
-<script type="module"> // BEGIN SCRIPT 2 - Firebase Configuration & Initialization
-    
-    // Import Firebase Modules
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
-    import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
-    
-    // Firebase config (replace with your actual values)
-    export const firebaseConfig = {
-        apiKey: "AIzaSyCfanKgFO98R1uKPpEAUUFOW1U66knL8Zs",
-        authDomain: "hellforge-13d88.firebaseapp.com",
-        projectId: "hellforge-13d88",
-        storageBucket: "hellforge-13d88.firebasestorage.app",
-        messagingSenderId: "453743116508",
-        appId: "1:453743116508:web:8beaee82ff6b78a2167419",
-        measurementId: "G-WRCFGP7F79"
-    };
 
-    // Initialize Firebase App & Firestore
-    const app = initializeApp(firebaseConfig);
-    export const db = getFirestore(app);    
-
-    console.log("🔥 Firebase Initialized Successfully!");
+<script type="module" src="firebaseConfig.js"></script> <!-- Firebase Initialization -->
     
-</script>
-
-<script type="module" src="js/vetra.js"></script>
+<script type="module" src="js/vetra.js"></script> <!-- Vetra's JavaScript -->
 
 </div>
 </body>
