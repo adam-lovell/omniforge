@@ -41,6 +41,10 @@
     <input type="text" id="task-duration" placeholder="e.g., 2h 30m">
 
     <button id="add-burden-btn">Add Burden</button>
+    <button id="view-burdens-btn">View Burdens</button>
+    <button id="shed-burdens-btn">Shed Burdens</button>
+    <button id="progress-report-btn">Progress Report</button>
+    <button id="save-exit-btn">Save</button>
 
     <h3>Your Burdens:</h3>
       
@@ -56,7 +60,7 @@
 <script type="module"> // BEGIN SCRIPT 1 - UI Logic & Event Listeners
 
      // ✅ Import Firestore Functions from vetra.js
-    import { addBurdens, viewBurdens, shedBurdens, progressReport, saveTasks, loadTasks } from './js/vetra.js';
+    import { addBurdens, viewBurdens, shedBurdens, progressReport, saveTasks, loadTasks } from './vetra.js';
 
     console.log("✅ Imported Vetra Functions into vetra.html");
     
@@ -150,8 +154,6 @@
 </script> 
 
 <script type="module" src="firebaseConfig.js"></script> <!-- Firebase Initialization -->
-    
-<script type="module" src="vetra.js"></script> <!-- Vetra's JavaScript -->
 
 </div>
 </body>
