@@ -8,15 +8,21 @@
     height: 70px;
     background-color: rgba(0, 0, 0, 0.9);
     display: flex;
-    justify-content: space-between;
     align-items: center;
     padding: 0 40px;
     z-index: 1000;
     box-shadow: 0 2px 8px rgba(13, 197, 255, 0.3);
+    justify-content: flex-start; /* 👈 Align everything to the left */
 }
 
 .logo-container img {
     height: 50px;
+}
+
+.left-nav {
+    display: flex;
+    align-items: center;
+    gap: 40px; /* Space between logo and links */
 }
 
 .nav-links {
