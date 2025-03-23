@@ -7,29 +7,30 @@
     <link rel="stylesheet" href="css/global.css">
 </head>
 <body>
+    <!-- ✅ Professional Navbar -->
+    <header class="navbar">
+        <div class="logo-container">
+            <a href="index.html">
+                <img src="images/omniforge_logo.jpg" alt="OmniForge Logo" id="omniforge-logo">
+            </a>
+        </div>
+        <nav class="nav-links">
+            <a href="/lts/tutoring.html">Tutoring</a>
+            <a href="/cybersecurity.html">Cybersecurity</a>
+            <a href="login.html">Login</a>
+            <a href="manifest.html">Start Optimizing</a>
+        </nav>
+    </header>
 
-    <!-- OmniForge Logo -->
-    <a href="index.html">
-        <img src="images/omniforge_logo.jpg" alt="OmniForge Logo" id="omniforge-logo">
-    </a>
-
-    <!-- Lovell Tutoring Services -->
-    <a href="/lts/tutoring.html">
-        <button>Lovell Tutoring Services</button>
-    </a>
-
-    <!-- Lovell Cybersecurity Solutions -->
-    <a href="/cybersecurity.html">
-          <button>Lovell Cybersecurity Solutions</button>
-    </a>
-
-    <!-- OmniForge Box -->
-    <div class="container">
+    <!-- 🔥 Hero Section (Center Content) -->
+    <main class="hero-section">
         <h1 class="title">OMNIFORGE</h1>
         <h2 class="question">THE FUTURE OF AUTOMATED PRODUCTIVITY.</h2>
-        <button onclick="window.location.href='login.html'">LOGIN/SIGN UP</button>
-        <button onclick="window.location.href='manifest.html'">START OPTIMIZING</button>
-    </div>
+        <div class="hero-buttons">
+            <a href="login.html" class="hero-btn">LOGIN / SIGN UP</a>
+            <a href="manifest.html" class="hero-btn">START OPTIMIZING</a>
+        </div>
+    </main>
 
     <script type="module" src="script.js"></script>
 </body>
