@@ -3,24 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <title>OmniForge Account</title>
+
+  <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+
+  <!-- FirebaseUI styles and script -->
+  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.2/firebase-ui-auth.css" />
+  <script src="https://www.gstatic.com/firebasejs/ui/6.0.2/firebase-ui-auth.js"></script>
 </head>
 <body>
-  <h2>OmniForge Account</h2>
+  <h2>OmniForge Login</h2>
 
-  <input type="email" id="email" placeholder="Email" />
-  <input type="password" id="password" placeholder="Password" />
-  <br><br>
-
-  <button onclick="signUp()">Sign Up</button>
-  <button onclick="logIn()">Log In</button>
-  <button onclick="logOut()">Log Out</button>
-
-  <p id="message"></p>
+  <div id="firebaseui-auth-container"></div>
+  <div id="loader">Loading...</div>
 
   <script>
-    // Firebase config (you already have this from your Firebase project)
     const firebaseConfig = {
       apiKey: "AIzaSyCfanKgFO98R1uKPpEAUUFOW1U66knL8Zs",
       authDomain: "hellforge-13d88.firebaseapp.com",
@@ -34,35 +32,19 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
-    function signUp() {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-      auth.createUserWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          document.getElementById("message").innerText = "Signup successful!";
-        })
-        .catch((error) => {
-          document.getElementById("message").innerText = error.message;
-        });
-    }
+    const ui = new firebaseui.auth.AuthUI(auth);
 
-    function logIn() {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-      auth.signInWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          document.getElementById("message").innerText = "Login successful!";
-        })
-        .catch((error) => {
-          document.getElementById("message").innerText = error.message;
-        });
-    }
+    const uiConfig = {
+      signInSuccessUrl: 'index.html', // Redirect after login
+      signInOptions: [
+        firebase.auth.EmailAuthProvider.PROVIDER_ID
+        // Add Google, Facebook, etc. later if needed
+      ],
+      tosUrl: '#',
+      privacyPolicyUrl: '#'
+    };
 
-    function logOut() {
-      auth.signOut().then(() => {
-        document.getElementById("message").innerText = "Logged out.";
-      });
-    }
+    ui.start('#firebaseui-auth-container', uiConfig);
   </script>
 </body>
 </html>
