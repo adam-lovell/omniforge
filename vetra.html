@@ -6,11 +6,45 @@
     <title>VETRA - DAUGHTER OF THE INQUISITOR</title>
     <link rel="stylesheet" href="css/global.css">
     <style>
+        .main-container {
+            display: flex;
+            flex-direction: column; /* Stack form and grid vertically for now */
+            gap: 20px;
+            padding: 20px;
+        }
+
+        #add-task-form {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        #add-task-form h2 {
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        #add-task-form label,
+        #add-task-form input,
+        #add-task-form select,
+        #add-task-form button {
+            display: block;
+            margin-bottom: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        #add-task-form button {
+            width: auto; /* Adjust button width as needed */
+            margin-right: 10px; /* Space out buttons */
+        }
+
         .eisenhower-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            padding: 20px;
+            gap: 15px;
         }
 
         .quadrant {
@@ -35,18 +69,26 @@
             border-bottom: none;
         }
 
-        #add-task-section label,
-        #add-task-section input,
-        #add-task-section select,
-        #add-task-section button {
-            display: block;
-            margin-bottom: 10px;
-            width: 100%; /* Make elements take full width */
-            box-sizing: border-box; /* Include padding and border in element's total width and height */
+        #calendar-container {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
         }
 
-        #add-task-section button {
-            width: auto; /* Adjust button width */
+        /* Adjust layout for larger screens to potentially have grid and calendar side-by-side */
+        @media (min-width: 768px) {
+            .main-container {
+                flex-direction: row;
+                align-items: flex-start; /* Align form, grid, and calendar to the top */
+            }
+
+            .eisenhower-grid {
+                flex-grow: 2; /* Let the grid take more horizontal space */
+            }
+
+            #calendar-container {
+                flex-basis: 300px; /* Set a fixed width for the calendar */
+            }
         }
     </style>
 </head>
@@ -65,58 +107,64 @@
         </div>
     </header>
 
-    <div class="eisenhower-grid">
-        <div class="quadrant" id="urgent-important">
-            <h2>Urgent & Important</h2>
-            <div id="urgent-important-tasks" class="task-list">
+    <div class="main-container">
+        <div id="add-task-form">
+            <h2>ADD NEW BURDEN</h2>
+            <p id="error-message" style="color: red;"></p>
+            <label for="task-description">DESCRIPTION:</label>
+            <input type="text" id="task-description" placeholder="Enter task description">
+
+            <label for="task-category">CATEGORY:</label>
+            <select id="task-category">
+                <option value="" disabled selected>Select Category</option>
+                <option value="Urgent & Important">Urgent & Important</option>
+                <option value="Not Urgent but Important">Not Urgent but Important</option>
+                <option value="Urgent but Not Important">Urgent but Not Important</option>
+                <option value="Not Urgent & Not Important">Not Urgent & Not Important</option>
+            </select>
+
+            <label for="task-date">DATE:</label>
+            <input type="date" id="task-date">
+
+            <label for="task-time">TIME:</label>
+            <input type="time" id="task-time">
+
+            <label for="task-duration">DURATION:</label>
+            <input type="text" id="task-duration" placeholder="e.g., 2h 30m">
+
+            <div>
+                <button id="add-burden-btn">ADD BURDEN</button>
+                <button id="view-burdens-btn">VIEW BURDENS</button>
+                <button id="shed-burdens-btn">SHED BURDENS</button>
+                <button id="progress-report-btn">PROGRESS REPORT</button>
+                <button id="save-exit-btn">SAVE</button>
+            </div>
+        </div>
+
+        <div class="eisenhower-grid">
+            <div class="quadrant" id="urgent-important">
+                <h2>URGENT & IMPORTANT</h2>
+                <div id="urgent-important-tasks" class="task-list"></div>
+            </div>
+            <div class="quadrant" id="not-urgent-important">
+                <h2>NOT URGENT BUT IMPORTANT</h2>
+                <div id="not-urgent-important-tasks" class="task-list"></div>
+            </div>
+            <div class="quadrant" id="urgent-not-important">
+                <h2>URGENT BUT NOT IMPORTANT</h2>
+                <div id="urgent-not-important-tasks" class="task-list"></div>
+            </div>
+            <div class="quadrant" id="not-urgent-not-important">
+                <h2>NOT URGENT & NOT IMPORTANT</h2>
+                <div id="not-urgent-not-important-tasks" class="task-list"></div>
+            </div>
+        </div>
+
+        <div id="calendar-container">
+            <h2>CALENDAR</h2>
+            <div id="calendar">
                 </div>
         </div>
-        <div class="quadrant" id="not-urgent-important">
-            <h2>Not Urgent but Important</h2>
-            <div id="not-urgent-important-tasks" class="task-list">
-                </div>
-        </div>
-        <div class="quadrant" id="urgent-not-important">
-            <h2>Urgent but Not Important</h2>
-            <div id="urgent-not-important-tasks" class="task-list">
-                </div>
-        </div>
-        <div class="quadrant" id="not-urgent-not-important">
-            <h2>Not Urgent & Not Important</h2>
-            <div id="not-urgent-not-important-tasks" class="task-list">
-                </div>
-        </div>
-    </div>
-
-    <div id="add-task-section" style="padding: 20px; border: 1px solid #eee; margin: 20px;">
-        <h2>Add New Task</h2>
-        <p id="error-message" style="color: red;"></p>
-        <label for="task-description">Description:</label>
-        <input type="text" id="task-description" placeholder="Enter task description">
-
-        <label for="task-category">Category:</label>
-        <select id="task-category">
-            <option value="" disabled selected>Select Category</option>
-            <option value="Urgent & Important">Urgent & Important</option>
-            <option value="Not Urgent but Important">Not Urgent but Important</option>
-            <option value="Urgent but Not Important">Urgent but Not Important</option>
-            <option value="Not Urgent & Not Important">Not Urgent & Not Important</option>
-        </select>
-
-        <label for="task-date">Date:</label>
-        <input type="date" id="task-date">
-
-        <label for="task-time">Time:</label>
-        <input type="time" id="task-time">
-
-        <label for="task-duration">Duration:</label>
-        <input type="text" id="task-duration" placeholder="e.g., 2h 30m">
-
-        <button id="add-burden-btn">Add Task</button>
-        <button id="view-burdens-btn">View Tasks</button>
-        <button id="shed-burdens-btn">Shed Tasks</button>
-        <button id="progress-report-btn">Progress Report</button>
-        <button id="save-exit-btn">Save</button>
     </div>
 
     <script type="module"> // BEGIN SCRIPT 1 - UI Logic & Event Listeners
@@ -166,10 +214,53 @@
             });
         }
 
+        // Function to render a basic calendar (you'll likely want a more robust library)
+        function renderCalendar() {
+            const calendarDiv = document.getElementById('calendar');
+            if (calendarDiv) {
+                const today = new Date();
+                const month = today.getMonth();
+                const year = today.getFullYear();
+
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+                const firstDayOfMonth = new Date(year, month, 1).getDay(); // 0 for Sunday, 1 for Monday, etc.
+
+                let calendarHTML = '<table><thead><tr>';
+                const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                daysOfWeek.forEach(day => {
+                    calendarHTML += `<th>${day}</th>`;
+                });
+                calendarHTML += '</tr></thead><tbody><tr>';
+
+                let dayCounter = 1;
+                for (let i = 0; i < 6; i++) { // Up to 6 weeks
+                    for (let j = 0; j < 7; j++) { // 7 days a week
+                        if (i === 0 && j < firstDayOfMonth) {
+                            calendarHTML += '<td></td>';
+                        } else if (dayCounter <= daysInMonth) {
+                            calendarHTML += `<td>${dayCounter}</td>`;
+                            dayCounter++;
+                        } else {
+                            calendarHTML += '<td></td>';
+                        }
+                    }
+                    calendarHTML += '</tr>';
+                    if (dayCounter > daysInMonth) {
+                        break;
+                    }
+                }
+                calendarHTML += '</tbody></table>';
+                calendarDiv.innerHTML = calendarHTML;
+            } else {
+                console.warn("⚠️ Missing #calendar element in HTML.");
+            }
+        }
+
         // MAIN UI FUNCTION
         async function main() {
             let [tasks, dailyTasks] = await loadTasks();
             renderTasks(tasks); // Initial rendering of tasks
+            renderCalendar(); // Render the calendar
         }
 
         // HELPER FUNCTION 1 - Converts to 24-Hour Format (retained for potential internal use)
@@ -271,5 +362,6 @@
 
     </script>
 
-    <script type="module" src="firebaseConfig.js"></script> </body>
+    <script type="module" src="firebaseConfig.js"></script>
+</body>
 </html>
