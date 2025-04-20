@@ -82,18 +82,6 @@
         border-bottom: none;
     }
 
-    #calendar-container {
-        border: 1px solid #ddd;
-        padding: 15px;
-        border-radius: 5px;
-        width: 100%; /* Make calendar full width on smaller screens */
-        box-sizing: border-box;
-    }
-
-    #calendar-container h2 {
-        margin-top: 0;
-    }
-
     /* Media query for screens wider than 768px (typical tablet size) */
     @media (min-width: 768px) {
         .main-container {
@@ -110,11 +98,6 @@
             grid-template-columns: 1fr 1fr; /* Two columns for quadrants on larger screens */
             flex-grow: 1; /* Allow grid to take remaining horizontal space */
         }
-
-        #calendar-container {
-            width: 300px; /* Give the calendar a fixed width on larger screens */
-        }
-    }
 
     /* Further adjustments for even wider screens (e.g., 1200px) if needed */
     @media (min-width: 1200px) {
@@ -189,11 +172,6 @@
                 <div id="not-urgent-not-important-tasks" class="task-list"></div>
             </div>
         </div>
-
-        <div id="calendar-container">
-            <h2>CALENDAR</h2>
-            <div id="calendar">
-                </div>
         </div>
     </div>
 
