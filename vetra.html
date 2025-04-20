@@ -6,91 +6,121 @@
     <title>VETRA - DAUGHTER OF THE INQUISITOR</title>
     <link rel="stylesheet" href="css/global.css">
     <style>
+    body {
+        margin: 0; /* Reset default body margin */
+        font-family: sans-serif; /* Or your preferred font */
+    }
+
+    .main-container {
+        display: flex;
+        flex-direction: column; /* Stack items on smaller screens */
+        gap: 20px;
+        padding: 20px;
+        box-sizing: border-box; /* Ensure padding doesn't add to the overall width */
+        max-width: 1200px; /* Optional: Limit the maximum width on very large screens */
+        margin: 0 auto; /* Center the content horizontally */
+    }
+
+    #add-task-form {
+        background-color: #f9f9f9;
+        padding: 20px;
+        border: 1px solid #eee;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        width: 100%; /* Make form full width on smaller screens */
+        box-sizing: border-box;
+    }
+
+    #add-task-form h2 {
+        margin-top: 0;
+        margin-bottom: 15px;
+    }
+
+    #add-task-form label,
+    #add-task-form input,
+    #add-task-form select,
+    #add-task-form button {
+        display: block;
+        margin-bottom: 10px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    #add-task-form button {
+        width: auto;
+        margin-right: 10px;
+    }
+
+    .eisenhower-grid {
+        display: grid;
+        grid-template-columns: 1fr; /* Stack quadrants on smaller screens */
+        gap: 15px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .quadrant {
+        border: 1px solid #ccc;
+        padding: 15px;
+    }
+
+    .quadrant h2 {
+        margin-top: 0;
+        text-align: center; /* Center quadrant titles */
+    }
+
+    .task-list {
+        margin-top: 10px;
+    }
+
+    .task-item {
+        border-bottom: 1px dashed #eee;
+        padding: 8px 0;
+    }
+
+    .task-item:last-child {
+        border-bottom: none;
+    }
+
+    #calendar-container {
+        border: 1px solid #ddd;
+        padding: 15px;
+        border-radius: 5px;
+        width: 100%; /* Make calendar full width on smaller screens */
+        box-sizing: border-box;
+    }
+
+    #calendar-container h2 {
+        margin-top: 0;
+    }
+
+    /* Media query for screens wider than 768px (typical tablet size) */
+    @media (min-width: 768px) {
         .main-container {
-            display: flex;
-            flex-direction: column; /* Stack form and grid vertically for now */
-            gap: 20px;
-            padding: 20px;
+            flex-direction: row; /* Arrange form, grid, and calendar in a row */
+            align-items: flex-start;
         }
 
         #add-task-form {
-            background-color: #f9f9f9;
-            padding: 20px;
-            border: 1px solid #eee;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-
-        #add-task-form h2 {
-            margin-top: 0;
-            margin-bottom: 15px;
-        }
-
-        #add-task-form label,
-        #add-task-form input,
-        #add-task-form select,
-        #add-task-form button {
-            display: block;
-            margin-bottom: 10px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        #add-task-form button {
-            width: auto; /* Adjust button width as needed */
-            margin-right: 10px; /* Space out buttons */
+            width: 300px; /* Give the form a fixed width on larger screens */
+            margin-right: 20px;
         }
 
         .eisenhower-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        .quadrant {
-            border: 1px solid #ccc;
-            padding: 15px;
-        }
-
-        .quadrant h2 {
-            margin-top: 0;
-        }
-
-        .task-list {
-            margin-top: 10px;
-        }
-
-        .task-item {
-            border-bottom: 1px dashed #eee;
-            padding: 8px 0;
-        }
-
-        .task-item:last-child {
-            border-bottom: none;
+            grid-template-columns: 1fr 1fr; /* Two columns for quadrants on larger screens */
+            flex-grow: 1; /* Allow grid to take remaining horizontal space */
         }
 
         #calendar-container {
-            border: 1px solid #ddd;
-            padding: 15px;
-            border-radius: 5px;
+            width: 300px; /* Give the calendar a fixed width on larger screens */
         }
+    }
 
-        /* Adjust layout for larger screens to potentially have grid and calendar side-by-side */
-        @media (min-width: 768px) {
-            .main-container {
-                flex-direction: row;
-                align-items: flex-start; /* Align form, grid, and calendar to the top */
-            }
-
-            .eisenhower-grid {
-                flex-grow: 2; /* Let the grid take more horizontal space */
-            }
-
-            #calendar-container {
-                flex-basis: 300px; /* Set a fixed width for the calendar */
-            }
-        }
-    </style>
+    /* Further adjustments for even wider screens (e.g., 1200px) if needed */
+    @media (min-width: 1200px) {
+        /* You can make further layout adjustments here if the above isn't ideal on very wide monitors */
+    }
+</style>
 </head>
 <body>
     <header class="navbar">
