@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VETRA - DAUGHTER OF THE INQUISITOR</title>
+    <link rel="stylesheet" href="css/global.css">
+    <style>
+        .eisenhower-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .quadrant {
+            border: 1px solid #ccc;
+            padding: 15px;
+        }
+
+        .quadrant h2 {
+            margin-top: 0;
+        }
+
+        .task-list {
+            margin-top: 10px;
+        }
+
+        .task-item {
+            border-bottom: 1px dashed #eee;
+            padding: 8px 0;
+        }
+
+        .task-item:last-child {
+            border-bottom: none;
+        }
+
+        #add-task-section label,
+        #add-task-section input,
+        #add-task-section select,
+        #add-task-section button {
+            display: block;
+            margin-bottom: 10px;
+            width: 100%; /* Make elements take full width */
+            box-sizing: border-box; /* Include padding and border in element's total width and height */
+        }
+
+        #add-task-section button {
+            width: auto; /* Adjust button width */
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="left-nav">
+            <a href="index.html" class="logo-link">
+                <img src="images/omniforge_logo.jpg" alt="OmniForge Logo" id="omniforge-logo">
+            </a>
+            <nav class="nav-links">
+                <a href="/login/account.html">Account</a>
+                <a href="/lts/tutoring.html">Learning</a>
+                <a href="/cybersecurity.html">Network Security</a>
+                <a href="about_omniforge.html">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="eisenhower-grid">
+        <div class="quadrant" id="urgent-important">
+            <h2>Urgent & Important</h2>
+            <div id="urgent-important-tasks" class="task-list">
+                </div>
+        </div>
+        <div class="quadrant" id="not-urgent-important">
+            <h2>Not Urgent but Important</h2>
+            <div id="not-urgent-important-tasks" class="task-list">
+                </div>
+        </div>
+        <div class="quadrant" id="urgent-not-important">
+            <h2>Urgent but Not Important</h2>
+            <div id="urgent-not-important-tasks" class="task-list">
+                </div>
+        </div>
+        <div class="quadrant" id="not-urgent-not-important">
+            <h2>Not Urgent & Not Important</h2>
+            <div id="not-urgent-not-important-tasks" class="task-list">
+                </div>
+        </div>
+    </div>
+
+    <div id="add-task-section" style="padding: 20px; border: 1px solid #eee; margin: 20px;">
+        <h2>Add New Burden</h2>
+        <p id="error-message" style="color: red;"></p>
+        <label for="task-description">Description:</label>
+        <input type="text" id="task-description" placeholder="Enter task description">
+
+        <label for="task-category">Category:</label>
+        <select id="task-category">
+            <option value="" disabled selected>Select Category</option>
+            <option value="Urgent & Important">Urgent & Important</option>
+            <option value="Not Urgent but Important">Not Urgent but Important</option>
+            <option value="Urgent but Not Important">Urgent but Not Important</option>
+            <option value="Not Urgent & Not Important">Not Urgent & Not Important</option>
+        </select>
+
+        <label for="task-date">Date:</label>
+        <input type="date" id="task-date">
+
+        <label for="task-time">Time:</label>
+        <input type="time" id="task-time">
+
+        <label for="task-duration">Duration:</label>
+        <input type="text" id="task-duration" placeholder="e.g., 2h 30m">
+
+        <button id="add-burden-btn">Add Burden</button>
+        <button id="view-burdens-btn">View Burdens</button>
+        <button id="shed-burdens-btn">Shed Burdens</button>
+        <button id="progress-report-btn">Progress Report</button>
+        <button id="save-exit-btn">Save</button>
+    </div>
+
+    <script type="module"> // BEGIN SCRIPT 1 - UI Logic & Event Listeners
+        // ✅ Import Firestore Functions from vetra.js
+        import { addBurdens, viewBurdens, shedBurdens, progressReport, saveTasks, loadTasks } from './vetra.js';
+
+        console.log("✅ Imported Vetra Functions into vetra.html");
+
+        // Function to render tasks in the appropriate quadrant
+        function renderTasks(tasks) {
+            const urgentImportantTasksDiv = document.getElementById('urgent-important-tasks');
+            const notUrgentImportantTasksDiv = document.getElementById('not-urgent-important-tasks');
+            const urgentNotImportantTasksDiv = document.getElementById('urgent-not-important-tasks');
+            const notUrgentNotImportantTasksDiv = document.getElementById('not-urgent-not-important-tasks');
+
+            if (!urgentImportantTasksDiv || !notUrgentImportantTasksDiv || !urgentNotImportantTasksDiv || !notUrgentNotImportantTasksDiv) {
+                console.error("⚠️ ERROR: Missing task list containers in HTML.");
+                return;
+            }
+
+            urgentImportantTasksDiv.innerHTML = '';
+            notUrgentImportantTasksDiv.innerHTML = '';
+            urgentNotImportantTasksDiv.innerHTML = '';
+            notUrgentNotImportantTasksDiv.innerHTML = '';
+
+            tasks.forEach(task => {
+                const taskItem = document.createElement('div');
+                taskItem.classList.add('task-item');
+                taskItem.textContent = task.description; // Adjust to display more task details
+
+                switch (task.category) {
+                    case 'Urgent & Important':
+                        urgentImportantTasksDiv.appendChild(taskItem);
+                        break;
+                    case 'Not Urgent but Important':
+                        notUrgentImportantTasksDiv.appendChild(taskItem);
+                        break;
+                    case 'Urgent but Not Important':
+                        urgentNotImportantTasksDiv.appendChild(taskItem);
+                        break;
+                    case 'Not Urgent & Not Important':
+                        notUrgentNotImportantTasksDiv.appendChild(taskItem);
+                        break;
+                    default:
+                        console.warn(`⚠️ Unknown category: ${task.category}`, task);
+                }
+            });
+        }
+
+        // MAIN UI FUNCTION
+        async function main() {
+            let [tasks, dailyTasks] = await loadTasks();
+            renderTasks(tasks); // Initial rendering of tasks
+        }
+
+        // HELPER FUNCTION 1 - Converts to 24-Hour Format (retained for potential internal use)
+        function convertTo24h(timeStr) {
+            if (!timeStr) return 0;
+            const [time, modifier] = timeStr.split(' ');
+            let [hours, minutes] = time.split(':').map(Number);
+            if (modifier && modifier.toUpperCase() === 'PM' && hours < 12) hours += 12;
+            if (modifier && modifier.toUpperCase() === 'AM' && hours === 12) hours = 0;
+            return hours * 60 + minutes;
+        }
+
+        // HELPER FUNCTION 2 - Converts to Minutes (retained for potential internal use)
+        function convertDurationToMinutes(durationStr) {
+            if (!durationStr) return 0;
+            let total = 0;
+            const parts = durationStr.match(/(\d+h)?\s?(\d+m)?/);
+            if (parts && parts[1]) total += parseInt(parts[1]) * 60;
+            if (parts && parts[2]) total += parseInt(parts[2]);
+            return total;
+        }
+
+        // UI EVENT LISTENERS
+        document.addEventListener("DOMContentLoaded", () => {
+            const addBurdenBtn = document.getElementById("add-burden-btn");
+            const viewBurdensBtn = document.getElementById("view-burdens-btn");
+            const shedBurdensBtn = document.getElementById("shed-burdens-btn");
+            const progressReportBtn = document.getElementById("progress-report-btn");
+            const saveExitBtn = document.getElementById("save-exit-btn");
+
+            if (!addBurdenBtn || !viewBurdensBtn || !shedBurdensBtn || !progressReportBtn || !saveExitBtn) {
+                console.error("⚠️ ERROR: Missing action buttons in HTML.");
+                return;
+            }
+
+            // Attach event listeners to buttons
+            if (addBurdenBtn) addBurdenBtn.addEventListener("click", () => {
+                console.log("📌 Add Burden Clicked!");
+                const descriptionInput = document.getElementById('task-description');
+                const categorySelect = document.getElementById('task-category');
+                const dateInput = document.getElementById('task-date');
+                const timeInput = document.getElementById('task-time');
+                const durationInput = document.getElementById('task-duration');
+                const errorMessage = document.getElementById('error-message');
+
+                if (!descriptionInput.value || !categorySelect.value) {
+                    errorMessage.textContent = "Please fill in the description and category.";
+                    return;
+                }
+                errorMessage.textContent = ""; // Clear any previous error
+
+                const newTask = {
+                    description: descriptionInput.value,
+                    category: categorySelect.value,
+                    date: dateInput.value,
+                    time: timeInput.value,
+                    duration: durationInput.value
+                };
+
+                addBurdens(newTask); // Assuming addBurdens now takes task data
+                // After adding, we might want to reload and re-render tasks
+                loadTasks().then(([updatedTasks, _]) => {
+                    renderTasks(updatedTasks);
+                    // Clear the input fields after adding
+                    descriptionInput.value = '';
+                    categorySelect.value = '';
+                    dateInput.value = '';
+                    timeInput.value = '';
+                    durationInput.value = '';
+                });
+            });
+
+            if (viewBurdensBtn) viewBurdensBtn.addEventListener("click", async () => {
+                console.log("📜 Viewing Burdens");
+                const [currentTasks, _] = await viewBurdens(); // Assuming viewBurdens now returns the tasks
+                renderTasks(currentTasks);
+            });
+
+            if (shedBurdensBtn) shedBurdensBtn.addEventListener("click", () => {
+                console.log("🔥 Shedding Burden!");
+                shedBurdens(); // Assuming shedBurdens handles the logic to remove tasks and updates data
+                loadTasks().then(([updatedTasks, _]) => renderTasks(updatedTasks));
+            });
+
+            if (progressReportBtn) progressReportBtn.addEventListener("click", () => {
+                console.log("📊 Checking Progress");
+                progressReport(); // Assuming progressReport calculates and potentially updates the UI directly or returns data to be rendered
+                // Depending on what progressReport does, you might need to update the UI here
+            });
+
+            if (saveExitBtn) saveExitBtn.addEventListener("click", () => {
+                console.log("💾 Saving Tasks");
+                saveTasks(); // Assuming saveTasks handles saving data
+                // Optionally, you could provide feedback to the user that tasks have been saved
+            });
+
+            main(); // Call main to load and initially render tasks
+        });
+
+    </script>
+
+    <script type="module" src="firebaseConfig.js"></script> </body>
+</html>
