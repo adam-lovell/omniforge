@@ -1,97 +1,126 @@
-    body {
-        margin: 0; /* Reset default body margin */
-        font-family: sans-serif; /* Or your preferred font */
-    }
+/* ================================== */
+/* Global Styles         */
+/* ================================== */
 
-    .main-container {
-        display: flex;
-        flex-direction: column; /* Stack items on smaller screens */
-        gap: 20px;
-        padding: 20px;
-        box-sizing: border-box; /* Ensure padding doesn't add to the overall width */
-        max-width: 1200px; /* Optional: Limit the maximum width on very large screens */
-        margin: 0 auto; /* Center the content horizontally */
-    }
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
 
-    #add-task-form {
-        background-color: #f9f9f9;
-        padding: 20px;
-        border: 1px solid #eee;
-        border-radius: 5px;
-        margin-bottom: 20px;
-        width: 100%; /* Make form full width on smaller screens */
-        box-sizing: border-box;
-    }
+/* ================================== */
+/* Main Container          */
+/* ================================== */
 
-    #add-task-form h2 {
-        margin-top: 0;
-        margin-bottom: 15px;
-    }
+.main-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+  max-width: 1200px;
+  margin: 0 auto;
+}
 
-    #add-task-form label,
-    #add-task-form input,
-    #add-task-form select,
-    #add-task-form button {
-        display: block;
-        margin-bottom: 10px;
-        width: 100%;
-        box-sizing: border-box;
-    }
+/* ================================== */
+/* Add Task Form           */
+/* ================================== */
 
-    #add-task-form button {
-        width: auto;
-        margin-right: 10px;
-    }
+#add-task-form {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
 
-    .eisenhower-grid {
-        display: grid;
-        grid-template-columns: 1fr; /* Stack quadrants on smaller screens */
-        gap: 15px;
-        width: 100%;
-        box-sizing: border-box;
-    }
+#add-task-form h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+}
 
-    .quadrant {
-        border: 1px solid #ccc;
-        padding: 15px;
-    }
+#add-task-form label,
+#add-task-form input,
+#add-task-form select,
+#add-task-form button {
+  display: block;
+  margin-bottom: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
 
-    .quadrant h2 {
-        margin-top: 0;
-        text-align: center; /* Center quadrant titles */
-    }
+#add-task-form button {
+  width: auto;
+  margin-right: 10px;
+}
 
-    .task-list {
-        margin-top: 10px;
-    }
+/* ================================== */
+/* Eisenhower Grid           */
+/* ================================== */
 
-    .task-item {
-        border-bottom: 1px dashed #eee;
-        padding: 8px 0;
-    }
+.eisenhower-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
+  width: 100%;
+  box-sizing: border-box;
+}
 
-    .task-item:last-child {
-        border-bottom: none;
-    }
+/* ================================== */
+/* Quadrants             */
+/* ================================== */
 
-    /* Media query for screens wider than 768px (typical tablet size) */
-    @media (min-width: 768px) {
-        .main-container {
-            flex-direction: row; /* Arrange form, grid, and calendar in a row */
-            align-items: flex-start;
-        }
+.quadrant {
+  border: 1px solid #ccc;
+  padding: 15px;
+}
 
-        #add-task-form {
-            width: 300px; /* Give the form a fixed width on larger screens */
-            margin-right: 20px;
-        }
+.quadrant h2 {
+  margin-top: 0;
+  text-align: center;
+}
 
-        .eisenhower-grid {
-            grid-template-columns: 1fr 1fr; /* Two columns for quadrants on larger screens */
-            flex-grow: 1; /* Allow grid to take remaining horizontal space */
-        }
+/* ================================== */
+/* Task List               */
+/* ================================== */
 
-    /* Further adjustments for even wider screens (e.g., 1200px) if needed */
-    @media (min-width: 1200px) {
-        /* You can make further layout adjustments here if the above isn't ideal on very wide monitors */
-    }
+.task-list {
+  margin-top: 10px;
+}
+
+.task-item {
+  border-bottom: 1px dashed #eee;
+  padding: 8px 0;
+}
+
+.task-item:last-child {
+  border-bottom: none;
+}
+
+/* ================================== */
+/* Media Queries           */
+/* ================================== */
+
+/* Media query for screens wider than 768px (typical tablet size) */
+@media (min-width: 768px) {
+  .main-container {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  #add-task-form {
+    width: 300px;
+    margin-right: 20px;
+  }
+
+  .eisenhower-grid {
+    grid-template-columns: 1fr 1fr;
+    flex-grow: 1;
+  }
+}
+
+/* Further adjustments for even wider screens (e.g., 1200px) if needed */
+@media (min-width: 1200px) {
+  /* You can make further layout adjustments here if the above isn't ideal on very wide monitors */
+}
