@@ -74,7 +74,7 @@ body {
 .quadrant {
   border: 1px solid #ccc;
   padding: 15px;
-  min-height: 200px; /* Added this line */
+  min-height: 200px; 
 }
 
 .quadrant h2 {
@@ -113,7 +113,7 @@ body {
   #add-task-form {
     width: 300px;
     margin-right: 20px;
-  }
+  }  
 
   .eisenhower-grid {
     grid-template-columns: 1fr 1fr;
@@ -121,7 +121,9 @@ body {
   }
 }
 
-/* Further adjustments for even wider screens (e.g., 1200px) if needed */
 @media (min-width: 1200px) {
-  /* You can make further layout adjustments here if the above isn't ideal on very wide monitors */
+.eisenhower-grid {
+    grid-template-columns: 1fr 1fr;
+    flex-grow: 1;
+  }
 }
