@@ -61,7 +61,8 @@ body {
 
 .eisenhower-grid {
   display: grid; /* Enables CSS Grid layout for this container */
-  grid-template-columns: 1fr; 
+  grid-template-columns: 1fr 1fr; 
+  grid-template-rows: auto auto;
   gap: 15px;
   width: 100%;
   box-sizing: border-box;
@@ -116,7 +117,6 @@ body {
   }  
 
   .eisenhower-grid {
-    grid-template-columns: 1fr 1fr;
     flex-grow: 1;
   }
 }
