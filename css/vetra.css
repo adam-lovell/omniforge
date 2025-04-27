@@ -20,9 +20,8 @@ body {
     box-sizing: border-box;
     max-width: 1200px;
     margin: 0 auto; /* Center horizontally on larger screens */
-    align-items: flex-start; /* Align items to the top by default on small screens */
+    align-items: center; /* Align items to the top by default on small screens */
     justify-content: flex-start; /* Align items to the start by default on small screens */
-    /* height: auto; <--- Let height be determined by content */
 }
 
 /* ================================== */
