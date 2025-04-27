@@ -69,7 +69,7 @@ body {
   box-sizing: border-box;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 100vh; /* Add some top margin - adjust this value as needed */
+  margin-top: 30vh; /* Add some top margin - adjust this value as needed */
   align-items: center;
   justify-content: center;
 }
