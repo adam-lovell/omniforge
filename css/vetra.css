@@ -21,6 +21,7 @@ body {
   box-sizing: border-box;
   max-width: 1200px;
   margin: 0 auto;
+  align-items: center;
   justify-content: center;
 }
 
@@ -70,8 +71,6 @@ body {
   margin-left: auto;
   margin-right: auto;
   margin-top: 20vh; /* Add some top margin - adjust this value as needed */
-  align-items: center;
-  justify-content: center;
 }
 
 /* ================================== */
