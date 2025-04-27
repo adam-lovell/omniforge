@@ -31,17 +31,12 @@ body {
 
 #add-task-form {
   background-color: #f9f9f9;
-  padding: 20px;
+  padding: 15px; /* Reduce top/bottom padding */
   border: 1px solid #eee;
   border-radius: 5px;
-  margin-bottom: 20px;
+  margin-bottom: 15px; /* Reduce bottom margin */
   width: 100%;
   box-sizing: border-box;
-}
-
-#add-task-form h2 {
-  margin-top: 0;
-  margin-bottom: 15px;
 }
 
 #add-task-form label,
@@ -49,14 +44,19 @@ body {
 #add-task-form select,
 #add-task-form button {
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 8px; /* Reduce margin below form elements */
   width: 100%;
   box-sizing: border-box;
 }
 
+#add-task-form h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
 #add-task-form button {
   width: auto;
-  margin-right: 10px;
+  margin-right: 10px; /* Reduce margin below heading */
 }
 
 /* ================================== */
@@ -114,16 +114,21 @@ body {
   .main-container {
     flex-direction: row;
     align-items: flex-start;
+    justify-content: flex-end; /* Push items to the right */
   }
 
   #add-task-form {
-    width: 300px;
-    margin-right: 20px;
+    width: 300px; 
+    margin-right: 0px;
+    margin-left: 20px;
+    order: 2;
   }  
 
   .eisenhower-grid {
     grid-template-columns: 1fr 1fr;
-    flex-grow: 1;
+    width: calc(70% - 20px);
+    margin-top: 0;
+    order: 1;
   }
 }
 
