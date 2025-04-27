@@ -1,139 +1,140 @@
 /* ================================== */
-/* Global Styles         */
+/* Global Styles                      */
 /* ================================== */
 
 body {
-  margin: 0;
-  font-family: sans-serif;
+    margin: 0;
+    font-family: sans-serif;
 }
 
 /* ================================== */
-/* Main Container          */
+/* Main Container                       */
 /* ================================== */
 
 .main-container {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  min-height: 100%;
-  gap: 20px;
-  padding: 20px;
-  box-sizing: border-box;
-  max-width: 1200px;
-  margin: 0 auto;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure it takes at least the full viewport height */
+    gap: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+    max-width: 1200px;
+    margin: 0 auto; /* Center horizontally on larger screens */
+    align-items: flex-start; /* Align items to the top by default on small screens */
+    justify-content: flex-start; /* Align items to the start by default on small screens */
+    /* height: auto; <--- Let height be determined by content */
 }
 
 /* ================================== */
-/* Add Task Form           */
+/* Add Task Form                        */
 /* ================================== */
 
 #add-task-form {
-  background-color: #f9f9f9;
-  padding: 15px; /* Reduce top/bottom padding */
-  border: 1px solid #eee;
-  border-radius: 5px;
-  margin-bottom: 15px; /* Reduce bottom margin */
-  width: 100%;
-  box-sizing: border-box;
+    background-color: #f9f9f9;
+    padding: 15px; /* Reduce top/bottom padding */
+    border: 1px solid #eee;
+    border-radius: 5px;
+    margin-bottom: 20px; /* Keep some bottom margin */
+    width: 100%;
+    box-sizing: border-box;
+    /* max-width: 400px; <--- Consider a max-width if it's too long on small screens */
 }
 
 #add-task-form label,
 #add-task-form input,
 #add-task-form select,
 #add-task-form button {
-  display: block;
-  margin-bottom: 8px; /* Reduce margin below form elements */
-  width: 100%;
-  box-sizing: border-box;
+    display: block;
+    margin-bottom: 8px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 #add-task-form h2 {
-  margin-top: 0;
-  margin-bottom: 10px;
+    margin-top: 0;
+    margin-bottom: 10px;
 }
 
 #add-task-form button {
-  width: auto;
-  margin-right: 10px; /* Reduce margin below heading */
+    width: auto;
+    margin-right: 10px;
 }
 
 /* ================================== */
-/* Eisenhower Grid           */
+/* Eisenhower Grid                     */
 /* ================================== */
 
 .eisenhower-grid {
-  display: grid; /* Enables CSS Grid layout for this container */
-  grid-template-columns: 50% 50%; 
-  gap: 15px;
-  box-sizing: border-box;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 20vh; /* Add some top margin - adjust this value as needed */
+    display: grid;
+    grid-template-columns: 1fr; /* Default to single column */
+    gap: 15px;
+    box-sizing: border-box;
+    margin: 20px auto 0; /* Center horizontally, add top margin */
+    width: 90%;
+    /* margin-top: 5vh; <--- Adjust or remove the large top margin */
 }
 
 /* ================================== */
-/* Quadrants             */
+/* Quadrants                          */
 /* ================================== */
 
 .quadrant {
-  border: 1px solid #ccc;
-  padding: 15px;
-  min-height: 200px; 
+    border: 1px solid #ccc;
+    padding: 15px;
+    min-height: 150px;
 }
 
 .quadrant h2 {
-  margin-top: 0;
-  text-align: center;
+    margin-top: 0;
+    text-align: center;
 }
 
 /* ================================== */
-/* Task List               */
+/* Task List                            */
 /* ================================== */
 
 .task-list {
-  margin-top: 10px;
+    margin-top: 20px;
 }
 
 .task-item {
-  border-bottom: 1px dashed #eee;
-  padding: 8px 0;
+    border-bottom: 1px dashed #eee;
+    padding: 10px 0;
 }
 
 .task-item:last-child {
-  border-bottom: none;
+    border-bottom: none;
 }
 
 /* ================================== */
-/* Media Queries           */
+/* Media Queries                        */
 /* ================================== */
 
-/* Media query for screens wider than 768px (typical tablet size) */
+/* For screens wider than 768px */
 @media (min-width: 768px) {
-  .main-container {
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-end; /* Push items to the right */
-  }
+    .main-container {
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: flex-end; /* Push form to the right */
+    }
 
-  #add-task-form {
-    width: 300px; 
-    margin-right: 0px;
-    margin-left: 20px;
-    order: 2;
-  }  
+    #add-task-form {
+        width: 300px;
+        margin-right: 0;
+        margin-left: 20px;
+        order: 2;
+    }
 
-  .eisenhower-grid {
-    grid-template-columns: 1fr 1fr;
-    width: calc(70% - 20px);
-    margin-top: 0;
-    order: 1;
-  }
+    .eisenhower-grid {
+        grid-template-columns: 1fr 1fr;
+        width: calc(70% - 20px);
+        margin-top: 0;
+        order: 1;
+    }
 }
 
 @media (min-width: 1200px) {
-.eisenhower-grid {
-    flex-grow: 1;
-  }
+    .eisenhower-grid {
+        width: 900px;
+    }
 }
