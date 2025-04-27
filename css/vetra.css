@@ -117,13 +117,14 @@ body {
   }  
 
   .eisenhower-grid {
+    grid-template-columns: 1fr 1fr;
     flex-grow: 1;
   }
 }
 
-/*@media (min-width: 1200px) {
+@media (min-width: 1200px) {
 .eisenhower-grid {
     grid-template-columns: 1fr 1fr;
     flex-grow: 1;
-  }*/
+  }
 }
