@@ -70,7 +70,7 @@ body {
     box-sizing: border-box;
     margin: 20px auto 0; /* Center horizontally, add top margin */
     width: 90%;
-    /* margin-top: 5vh; <--- Adjust or remove the large top margin */
+    margin-top: 15vh; /* <--- Adjust or remove the large top margin */
 }
 
 /* ================================== */
